@@ -22,8 +22,9 @@ const Footer = () => {
                 <Image 
                   src="/images/logo/logo-orange.png"
                   alt="KoNam Tours Logo"
-                  width={64}
-                  height={58}
+                  width={70}
+                  height={50}
+                  priority
                 />
               </div>
               <p className="text-gray-600 mb-3 text-sm">

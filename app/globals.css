@@ -1,9 +1,6 @@
 @import "tailwindcss";
-
-@theme {
-  --font-sans: var(--font-poppins);
-  --font-korean: var(--font-noto-sans-kr);
-}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
 
 :root {
   --background: #ffffff;
@@ -43,12 +40,12 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-sans);
+  font-family: 'Poppins', sans-serif;
   font-size: 0.95rem; /* Slightly smaller default font size */
 }
 
 .korean-text {
-  font-family: var(--font-korean);
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 @layer base {

@@ -29,7 +29,7 @@ export default function Home() {
       <FeaturedTours tours={featuredTours} />
       
       {/* Call to Action - Enquiry */}
-      <section className="py-16 bg-gradient-to-r from-[var(--korean-blue)] to-[var(--night)] text-white">
+      <section className="py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

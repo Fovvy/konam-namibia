@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 const heroBackgrounds = [
@@ -28,6 +29,9 @@ const heroBackgrounds = [
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [arrivalDate, setArrivalDate] = useState('');
+  const [departureDate, setDepartureDate] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -36,6 +40,13 @@ const HeroSection = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const handleBookNow = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (arrivalDate && departureDate) {
+      router.push(`/bookings?startDate=${arrivalDate}&endDate=${departureDate}`);
+    }
+  };
 
   return (
     <div className="relative h-[85vh] overflow-hidden">
@@ -70,12 +81,60 @@ const HeroSection = () => {
             <h1 className="text-5xl md:text-7xl font-bold mb-2">
               {heroBackgrounds[currentSlide].title}
             </h1>
-            <h2 className="text-2xl md:text-3xl mb-6 korean-text">
+            <h2 className="text-2xl md:text-3xl mb-4 korean-text">
               {heroBackgrounds[currentSlide].subtitle}
             </h2>
-            <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl mb-6 max-w-2xl mx-auto">
               {heroBackgrounds[currentSlide].description}
             </p>
+
+            {/* Mini Date Submission Form */}
+            <form 
+              onSubmit={handleBookNow}
+              className="flex flex-col md:flex-row gap-4 justify-center items-center mb-6 max-w-xl mx-auto bg-black/30 p-4 rounded-lg"
+            >
+              <div className="flex flex-col w-full md:w-auto">
+                <label htmlFor="arrivalDate" className="flex items-center gap-2 text-sm mb-1 text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Arrival Date
+                </label>
+                <input
+                  id="arrivalDate"
+                  type="date"
+                  value={arrivalDate}
+                  onChange={(e) => setArrivalDate(e.target.value)}
+                  className="p-2 rounded-md text-gray-900 w-full md:w-40"
+                  required
+                />
+              </div>
+              
+              <div className="flex flex-col w-full md:w-auto">
+                <label htmlFor="departureDate" className="flex items-center gap-2 text-sm mb-1 text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-4 4L5 7" />
+                  </svg>
+                  Departure Date
+                </label>
+                <input
+                  id="departureDate"
+                  type="date"
+                  value={departureDate}
+                  onChange={(e) => setDepartureDate(e.target.value)}
+                  className="p-2 rounded-md text-gray-900 w-full md:w-40"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-md transition-colors mt-4 md:mt-6 w-full md:w-auto"
+              >
+                Book Now
+              </button>
+            </form>
+
             <div className="flex gap-4 justify-center">
               <Link href="/tours" className="btn-primary">
                 Explore Tours

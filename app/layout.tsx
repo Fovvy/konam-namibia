@@ -1,20 +1,7 @@
 import type { Metadata } from "next";
-import { Poppins, Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: "--font-poppins",
-});
-
-const notoSansKR = Noto_Sans_KR({
-  subsets: ["latin"],
-  weight: ['300', '400', '500', '700'],
-  variable: "--font-noto-sans-kr",
-});
 
 export const metadata: Metadata = {
   title: "KoNam | Korean-Namibian Tourism",
@@ -35,9 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.variable} ${notoSansKR.variable} antialiased`}
-      >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+      </head>
+      <body className="antialiased">
         <Header />
         <main className="min-h-screen pt-20">
           {children}

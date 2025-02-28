@@ -12,6 +12,8 @@ const BookingsPage = () => {
   const searchParams = useSearchParams();
   const tourId = searchParams.get('tour');
   const vehicleId = searchParams.get('vehicle');
+  const startDateParam = searchParams.get('startDate');
+  const endDateParam = searchParams.get('endDate');
 
   const [selectedTour, setSelectedTour] = useState<TourPackage | null>(
     tourId ? mockTours.find(tour => tour.id === tourId) || null : null
@@ -26,8 +28,8 @@ const BookingsPage = () => {
     email: '',
     phone: '',
     numPeople: 1,
-    startDate: '',
-    endDate: '',
+    startDate: startDateParam || '',
+    endDate: endDateParam || '',
     additionalRequests: '',
     agreeTerms: false
   });
@@ -71,16 +73,17 @@ const BookingsPage = () => {
   return (
     <main className="pt-32 pb-16">
       <div className="container-custom mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className="text-4xl font-bold mb-2 text-gray-800">Book Your Namibian Adventure</h1>
-          <p className="text-xl text-gray-600 mb-8">
-            Fill out the form below to book your tour or vehicle rental.
-          </p>
-        </motion.div>
+        <section className="py-12 bg-gray-900 text-white">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="container-custom"
+          >
+            <h1 className="text-4xl font-bold mb-2 text-white">Book Your Namibian Adventure</h1>
+            <p className="text-gray-300">Fill out the form below to book your tour or vehicle rental.</p>
+          </motion.div>
+        </section>
 
         <div className="grid md:grid-cols-3 gap-8">
           {/* Booking Form */}

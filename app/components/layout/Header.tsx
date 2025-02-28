@@ -54,9 +54,10 @@ const Header = () => {
             <Image 
               src={scrolled ? '/images/logo/logo-dark.png' : '/images/logo/logo-orange.png'} 
               alt="KoNam Tours Logo" 
-              width={64}
-              height={58}
+              width={60}
+              height={50}
               className="transition-all duration-300"
+              priority
             />
           </motion.div>
         </Link>
