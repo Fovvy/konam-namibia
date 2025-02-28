@@ -1,101 +1,111 @@
-import Image from "next/image";
+'use client';
+
+import React from 'react';
+import HeroSection from './components/ui/HeroSection';
+import AutoCarousel from './components/ui/AutoCarousel';
+import FeaturedTours from './components/ui/FeaturedTours';
+import WhyChooseUs from './components/ui/WhyChooseUs';
+import Testimonials from './components/ui/Testimonials';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { mockTours, mockReviews, partnerLogos } from './lib/mockData';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  // Use only featured tours for homepage
+  const featuredTours = mockTours.filter(tour => tour.featured);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  return (
+    <>
+      {/* Hero Section */}
+      <HeroSection />
+      
+      {/* Auto Carousel for Partner Logos */}
+      <AutoCarousel 
+        logos={partnerLogos} 
+        title="Our Trusted Partners"
+      />
+      
+      {/* Featured Tours */}
+      <FeaturedTours tours={featuredTours} />
+      
+      {/* Call to Action - Enquiry */}
+      <section className="py-16 bg-gradient-to-r from-[var(--korean-blue)] to-[var(--night)] text-white">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-3xl mx-auto"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Plan Your Perfect Namibian Adventure
+              <div className="korean-text text-xl mt-2">
+                당신만의 완벽한 나미비아 모험을 계획하세요
+              </div>
+            </h2>
+            <p className="text-lg mb-8">
+              Tell us your travel preferences, and we'll create a customized itinerary that matches your interests, budget, and schedule.
+            </p>
+            <Link
+              href="/enquiry"
+              className="inline-block px-8 py-4 bg-white text-[var(--korean-blue)] rounded-full font-bold text-lg hover:bg-gray-100 transition-colors hover:scale-105 transform duration-300"
+            >
+              Make an Enquiry
+            </Link>
+          </motion.div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+      
+      {/* Why Choose Us */}
+      <WhyChooseUs />
+      
+      {/* Testimonials */}
+      <Testimonials reviews={mockReviews} />
+      
+      {/* Call to Action - Booking */}
+      <section className="py-16 bg-[var(--desert)] bg-opacity-30">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+          >
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[var(--text-primary)]">
+                Ready to Book Your Namibian Journey?
+              </h2>
+              <p className="text-lg text-[var(--text-secondary)] mb-6">
+                Browse our selection of curated tour packages and vehicle rentals to begin your unforgettable adventure in Namibia.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/tours"
+                  className="btn-primary text-center"
+                >
+                  View Tour Packages
+                </Link>
+                <Link
+                  href="/vehicles"
+                  className="btn-secondary text-center"
+                >
+                  Rent a Vehicle
+                </Link>
+              </div>
+            </div>
+            <div className="relative h-80 overflow-hidden rounded-2xl shadow-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] opacity-40"></div>
+              <div className="absolute inset-0 flex items-center justify-center text-white z-10">
+                <div className="text-center">
+                  <h3 className="text-3xl font-bold mb-4">Special Offer</h3>
+                  <p className="text-xl mb-4">10% Off for Early Bookings</p>
+                  <p className="text-sm">Book 3 months in advance and save!</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </>
   );
 }

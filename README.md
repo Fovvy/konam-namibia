@@ -1,4 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KoNam Tourism Website
+
+A dynamic tourism website connecting Korean travelers with Namibian experiences.
+
+## Project Overview
+
+KoNam is a tourism company specializing in creating unforgettable Namibian experiences for Korean travelers. This website showcases tour packages, vehicle rentals, and allows visitors to make enquiries.
+
+### Key Features
+
+- **Tour Packages**: Browse and filter through various tour packages
+- **Vehicle Rentals**: Explore available vehicles for rent
+- **Enquiry Form**: Submit travel preferences and questions
+- **Responsive Design**: Optimized for all devices
+- **Bilingual Content**: English with Korean translations
+
+## Tech Stack
+
+- **Frontend**: Next.js 15 with TypeScript and Tailwind CSS
+- **Backend**: Supabase for data storage and authentication
+- **Animations**: Framer Motion for smooth transitions
+- **Deployment**: Netlify
 
 ## Getting Started
 
@@ -6,31 +27,46 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file in the root directory with the following variables:
 
-## Learn More
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment on Netlify
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is configured for easy deployment on Netlify:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push your code to a GitHub repository
+2. Log in to Netlify and click "New site from Git"
+3. Select your repository and configure the build settings:
+   - Build command: `npm run build`
+   - Publish directory: `.next`
+4. Add your environment variables in the Netlify dashboard
+5. Deploy!
 
-## Deploy on Vercel
+The included `netlify.toml` file handles the configuration automatically.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `app/` - Next.js application code
+  - `components/` - Reusable UI components
+  - `lib/` - Utility functions and types
+  - `tours/` - Tour packages page
+  - `vehicles/` - Vehicle rentals page
+  - `enquiry/` - Enquiry form page
+
+## Image Credits
+
+For the production site, replace the placeholder images in the `public/images/` directory with properly licensed photos of Namibian landscapes, wildlife, and vehicles.
+
+## License
+
+This project is licensed under the MIT License.

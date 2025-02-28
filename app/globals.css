@@ -1,24 +1,149 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-poppins);
+  --font-korean: var(--font-noto-sans-kr);
 }
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* KoNam custom colors */
+  --primary: #D68C47; /* Orange from logo */
+  --secondary: #333333; /* Dark grey */
+  --accent: #F5F5F5; /* Light grey */
+  --text-primary: #333333; /* Dark grey for text */
+  --text-secondary: #666666; /* Medium grey for secondary text */
+  --desert: #F5DEB3; /* Sand/desert color */
+  --wildlife: #85BB65; /* Safari green */
+  --sky: #87CEEB; /* Namibian sky blue */
+  --night: #1A237E; /* Deep night sky blue */
+  --korean-red: #CD2E3A; /* Korean flag red */
+  --korean-blue: #0047A0; /* Korean flag blue */
+  
+  /* Glassmorphism variables */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  --glass-blur: 8px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #121212;
+    --foreground: #f5f5f5;
+    --text-primary: #f0f0f0;
+    --text-secondary: #cccccc;
+    --glass-bg: rgba(30, 30, 30, 0.7);
+    --glass-border: rgba(50, 50, 50, 0.25);
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-size: 0.95rem; /* Slightly smaller default font size */
+}
+
+.korean-text {
+  font-family: var(--font-korean);
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+  }
+  
+  h1 {
+    font-size: 2.25rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  h3 {
+    font-size: 1.4rem;
+  }
+  
+  h4 {
+    font-size: 1.2rem;
+  }
+  
+  h5, h6 {
+    font-size: 1.1rem;
+  }
+  
+  input, select, textarea {
+    color: var(--text-primary) !important;
+    font-weight: 500;
+  }
+  
+  input::placeholder, select::placeholder, textarea::placeholder {
+    color: var(--text-secondary) !important;
+    opacity: 0.7;
+  }
+  
+  label {
+    color: var(--text-primary) !important;
+    opacity: 0.9;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[var(--primary)] text-white px-6 py-3 rounded-md font-bold 
+    hover:bg-[var(--primary)] hover:opacity-90 transition-all duration-300;
+  }
+  
+  .btn-secondary {
+    @apply bg-[var(--secondary)] text-white px-6 py-3 rounded-md font-bold 
+    hover:bg-[var(--secondary)] hover:opacity-90 transition-all duration-300;
+  }
+  
+  .card {
+    @apply rounded-lg overflow-hidden hover:shadow-lg transition-shadow;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+  
+  .container-custom {
+    @apply max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12;
+  }
+  
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    @apply rounded-lg;
+  }
+  
+  .bg-safari {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
