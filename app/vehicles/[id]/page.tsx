@@ -2,6 +2,7 @@
 import React from 'react';
 import { mockVehicles } from '@/app/lib/mockData';
 import VehicleDetailClient from './VehicleDetailClient';
+import { Metadata } from 'next';
 
 // This function is required for static exports 
 export async function generateStaticParams() {
@@ -10,7 +11,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function VehicleDetails({ params }: { params: { id: string } }) {
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default async function VehicleDetails({ params }: Props) {
   const vehicle = mockVehicles.find((v) => v.id === params.id);
 
   if (!vehicle) {

@@ -2,6 +2,7 @@
 import React from 'react';
 import { mockTours } from '@/app/lib/mockData';
 import TourDetailClient from './TourDetailClient';
+import { Metadata } from 'next';
 
 // This function is required for static exports
 export async function generateStaticParams() {
@@ -10,17 +11,13 @@ export async function generateStaticParams() {
   }));
 }
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
-export default function TourDetails({ params }: PageProps) {
-  // Ensure params is fully resolved before accessing properties
-  const id = params.id;
-  const tour = mockTours.find((t) => t.id === id);
+export default async function TourDetails({ params }: Props) {
+  const tour = mockTours.find((t) => t.id === params.id);
 
   if (!tour) {
     return <div className="min-h-screen flex items-center justify-center">Tour not found</div>;
