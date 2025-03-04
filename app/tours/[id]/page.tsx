@@ -10,7 +10,14 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function TourDetails({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: {
+    id: string;
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+export default function TourDetails({ params }: PageProps) {
   // Ensure params is fully resolved before accessing properties
   const id = params.id;
   const tour = mockTours.find((t) => t.id === id);
