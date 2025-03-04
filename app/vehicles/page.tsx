@@ -262,7 +262,7 @@ const VehiclesPage = () => {
             <p className="text-gray-200 mb-6">
               Our team is here to help you choose the right vehicle for your Namibian adventure. 
               Whether you need recommendations on which 4x4 is best for your safari plans or 
-              have questions about driving in Namibia, we're just a call or message away.
+              have questions about driving in Namibia, we&apos;re just a call or message away.
             </p>
             <Link href="/enquiry" className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg inline-block transition-colors">
               Contact Us

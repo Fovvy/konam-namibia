@@ -202,11 +202,11 @@ const ToursPage = () => {
           border: '1px solid rgba(255, 255, 255, 0.1)'
         }}>
           <h2 className="text-2xl font-bold text-white mb-4">
-            Can't find what you're looking for?
+            Can&apos;t find what you&apos;re looking for?
           </h2>
           <p className="text-gray-200 mb-6 max-w-2xl mx-auto">
             We specialize in creating personalized tour packages tailored to your preferences.
-            Tell us what you're interested in, and we'll design the perfect itinerary for you.
+            Tell us what you&apos;re interested in, and we&apos;ll design the perfect itinerary for you.
           </p>
           <Link href="/enquiry" className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg inline-block transition-colors">
             Request Custom Tour

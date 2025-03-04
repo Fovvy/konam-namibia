@@ -123,7 +123,7 @@ export default function TourDetailClient({ tour }: TourDetailClientProps) {
                     </svg>
                   ))}
                 </div>
-                <p className="text-gray-600 italic mb-4">"This tour exceeded all our expectations. The guides were knowledgeable and the scenery was breathtaking!"</p>
+                <p className="text-gray-600 italic mb-4">&ldquo;This tour exceeded all our expectations. The guides were knowledgeable and the scenery was breathtaking!&rdquo;</p>
                 <div className="font-medium">
                   <p className="text-gray-800">Adventure Seeker</p>
                   <p className="text-gray-500 text-sm">Seoul, South Korea</p>

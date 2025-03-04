@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ItineraryDay, Activity } from '@/app/lib/types';
+import { Activity } from '@/app/lib/types';
 import { mockTours } from '@/app/lib/mockData';
 
 interface ItinerarySectionProps {

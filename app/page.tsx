@@ -44,7 +44,7 @@ export default function Home() {
               </div>
             </h2>
             <p className="text-lg mb-8">
-              Tell us your travel preferences, and we'll create a customized itinerary that matches your interests, budget, and schedule.
+              Tell us your travel preferences, and we&apos;ll create a customized itinerary that matches your interests, budget, and schedule.
             </p>
             <Link
               href="/enquiry"

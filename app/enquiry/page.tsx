@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { mockTours } from '../lib/mockData';
+import { TourPackage } from '../lib/types';
 
 interface Activity {
   description: string;
@@ -32,15 +33,15 @@ const EnquiryPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formError, setFormError] = useState('');
   const [showItinerary, setShowItinerary] = useState(false);
-  const [selectedTour, setSelectedTour] = useState<any>(null);
+  const [selectedTour, setSelectedTour] = useState<TourPackage | null>(null);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     
     if (name === 'tourPackageId' && value) {
       const tour = mockTours.find(t => t.id === value);
-      setSelectedTour(tour);
-      setShowItinerary(!!tour?.itinerary);
+      setSelectedTour(tour || null);
+      setShowItinerary(!!(tour?.itinerary));
     } else if (name === 'tourPackageId' && !value) {
       setSelectedTour(null);
       setShowItinerary(false);
