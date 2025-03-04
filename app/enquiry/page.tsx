@@ -4,6 +4,18 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { mockTours } from '../lib/mockData';
 
+interface Activity {
+  description: string;
+}
+
+interface ItineraryDay {
+  day: number;
+  location: string;
+  transportation?: string;
+  accommodation?: string;
+  activities: Activity[];
+}
+
 const EnquiryPage = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -447,7 +459,7 @@ const EnquiryPage = () => {
               </p>
               
               <div className="space-y-4">
-                {selectedTour.itinerary.map((day: any) => (
+                {selectedTour.itinerary.map((day: ItineraryDay) => (
                   <div key={day.day} className="border-l-4 border-orange-500 pl-4">
                     <h4 className="text-lg font-bold text-gray-800">
                       Day {day.day}: {day.location}
@@ -467,7 +479,7 @@ const EnquiryPage = () => {
                     <div className="mt-2">
                       <p className="text-gray-700 font-medium">Highlights:</p>
                       <ul className="list-disc list-inside text-gray-600 text-sm">
-                        {day.activities.slice(0, 2).map((activity: any, index: number) => (
+                        {day.activities.slice(0, 2).map((activity: Activity, index: number) => (
                           <li key={index}>{activity.description}</li>
                         ))}
                         {day.activities.length > 2 && (

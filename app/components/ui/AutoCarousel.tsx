@@ -23,8 +23,6 @@ const AutoCarousel: React.FC<AutoCarouselProps> = ({
     
     // Only apply animation if content is wider than container
     if (scrollWidth > clientWidth) {
-      const duration = scrollWidth / speed;
-      
       const styleSheet = document.createElement('style');
       styleSheet.innerHTML = `
         @keyframes scroll {

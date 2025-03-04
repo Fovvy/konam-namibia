@@ -77,7 +77,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ reviews }) => {
                       </div>
                     </div>
                     <blockquote className="text-lg text-[var(--text-secondary)] italic">
-                      "{review.comment}"
+                      &ldquo;{review.comment}&rdquo;
                     </blockquote>
                   </div>
                 </div>
