@@ -165,7 +165,7 @@ const EnquiryPage = () => {
                     Thank You for Your Enquiry!
                   </h2>
                   <p className="text-[var(--text-secondary)] mb-8">
-                    We've received your enquiry and will get back to you within 24 hours. 
+                    We&apos;ve received your enquiry and will get back to you within 24 hours. 
                     Check your email for a confirmation of your enquiry details.
                   </p>
                   <button
@@ -326,7 +326,7 @@ const EnquiryPage = () => {
                   {/* Attractions */}
                   <div className="mb-6">
                     <label className="block text-sm font-medium text-white mb-2">
-                      Attractions You'd Like to Visit
+                      Attractions You&apos;d Like to Visit
                     </label>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                       {allAttractions.map(attraction => (
@@ -456,7 +456,7 @@ const EnquiryPage = () => {
             >
               <h3 className="text-2xl font-bold text-gray-800 mb-4">Tour Itinerary Overview</h3>
               <p className="text-gray-600 mb-6">
-                Here's a preview of what you can expect on this tour. For more details, please book the tour or contact us.
+                Here&apos;s a preview of what you can expect on this tour. For more details, please book the tour or contact us.
               </p>
               
               <div className="space-y-4">
