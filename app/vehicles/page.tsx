@@ -37,20 +37,42 @@ const VehiclesPage = () => {
   const vehicleTypes = Array.from(new Set(mockVehicles.map(vehicle => vehicle.type.toLowerCase())));
 
   return (
-    <div className="pt-8 pb-16 bg-safari"
-      style={{
-        backgroundImage: 'url(/images/land-rover.jpg)',
-      }}
+    <div 
+      className="pt-8 pb-16 min-h-screen relative"
     >
-      <div className="container-custom">
+      {/* Background image with blur */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/tour%20images/namibia-desert-road.jpg)',
+          backgroundAttachment: 'fixed',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: 'blur(2px)',
+        }}
+      />
+      
+      {/* Semi-transparent overlay */}
+      <div 
+        className="absolute inset-0 z-0" 
+        style={{ 
+          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          position: 'fixed',
+        }}
+      />
+      
+      {/* Content container - not blurred */}
+      <div 
+        className="container-custom relative z-10"
+      >
         {/* Hero Banner */}
         <div className="relative h-80 rounded-3xl overflow-hidden mb-12">
           <div 
             className="absolute inset-0"
             style={{
-              backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(/images/land-rover.jpg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              backdropFilter: 'blur(5px)',
             }}
           />
           <div className="absolute inset-0 flex items-center justify-center text-center px-4">
@@ -70,11 +92,19 @@ const VehiclesPage = () => {
         </div>
         
         {/* Filters and Search */}
-        <div className="glass-card p-6 mb-8">
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.65)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          borderRadius: '0.5rem',
+          padding: '1.5rem'
+        }} className="mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Search */}
             <div>
-              <label htmlFor="search" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
                 Search
               </label>
               <input
@@ -89,7 +119,7 @@ const VehiclesPage = () => {
             
             {/* Type Filter */}
             <div>
-              <label htmlFor="type" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">
                 Vehicle Type
               </label>
               <select
@@ -107,7 +137,7 @@ const VehiclesPage = () => {
             
             {/* Sort By */}
             <div>
-              <label htmlFor="sort" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="sort" className="block text-sm font-medium text-gray-700 mb-1">
                 Sort By
               </label>
               <select
@@ -128,7 +158,19 @@ const VehiclesPage = () => {
         
         {/* Results Count */}
         <div className="mb-6">
-          <p className="text-[var(--text-secondary)]">
+          <p style={{
+            background: 'rgba(0, 0, 0, 0.5)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '0.5rem',
+            padding: '0.5rem 1rem',
+            color: 'white',
+            fontWeight: '500',
+            fontSize: '1.125rem',
+            display: 'inline-block'
+          }}>
             Showing {sortedVehicles.length} {sortedVehicles.length === 1 ? 'vehicle' : 'vehicles'}
           </p>
         </div>
@@ -163,11 +205,17 @@ const VehiclesPage = () => {
         
         {/* Rental Information */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-[var(--light)] rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-4">
+          <div className="rounded-2xl p-8" style={{
+            background: 'rgba(255, 255, 255, 0.7)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)'
+          }}>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Rental Information
             </h2>
-            <ul className="space-y-3 text-[var(--text-secondary)]">
+            <ul className="space-y-3 text-gray-700">
               <li className="flex items-start">
                 <svg className="h-6 w-6 text-[var(--secondary)] mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
@@ -201,16 +249,22 @@ const VehiclesPage = () => {
             </ul>
           </div>
           
-          <div className="bg-[var(--secondary)] bg-opacity-10 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-4">
+          <div className="rounded-2xl p-8" style={{
+            background: 'rgba(0, 0, 0, 0.6)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.1)'
+          }}>
+            <h2 className="text-2xl font-bold text-white mb-4">
               Need Assistance?
             </h2>
-            <p className="text-[var(--text-secondary)] mb-6">
+            <p className="text-gray-200 mb-6">
               Our team is here to help you choose the right vehicle for your Namibian adventure. 
               Whether you need recommendations on which 4x4 is best for your safari plans or 
               have questions about driving in Namibia, we're just a call or message away.
             </p>
-            <Link href="/enquiry" className="btn-primary inline-block">
+            <Link href="/enquiry" className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg inline-block transition-colors">
               Contact Us
             </Link>
           </div>
@@ -231,7 +285,17 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, index }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="card group"
+      style={{
+        background: 'rgba(255, 255, 255, 0.75)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1), 0 0 15px rgba(255, 255, 255, 0.5)',
+        border: '1px solid rgba(255, 255, 255, 0.3)',
+        borderRadius: '0.5rem',
+        overflow: 'hidden',
+        transition: 'all 0.3s ease'
+      }}
+      className="hover:shadow-xl hover:translate-y-[-5px]"
     >
       <div className="relative h-60 w-full overflow-hidden">
         <Image
@@ -299,7 +363,7 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, index }) => {
           </div>
           <Link
             href={`/vehicles/${vehicle.id}`}
-            className="block px-4 py-2 bg-[var(--desert)] text-[var(--text-primary)] rounded-lg font-medium hover:bg-[var(--accent)] hover:text-white transition-colors"
+            className="block px-4 py-2 bg-[var(--desert)] text-black font-semibold rounded-lg hover:bg-[var(--accent)] hover:text-white transition-colors"
           >
             View Details
           </Link>

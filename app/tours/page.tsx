@@ -36,12 +36,31 @@ const ToursPage = () => {
   });
 
   return (
-    <div className="pt-8 pb-16 bg-safari"
-      style={{
-        backgroundImage: 'url(/images/namibia-desert.jpg)',
-      }}
-    >
-      <div className="container-custom">
+    <div className="pt-8 pb-16 min-h-screen relative">
+      {/* Background image with blur */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/images/tour-image.jpg)',
+          backgroundAttachment: 'fixed',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: 'blur(2px)',
+        }}
+      />
+      
+      {/* Semi-transparent overlay */}
+      <div 
+        className="absolute inset-0 z-0" 
+        style={{ 
+          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          position: 'fixed',
+        }}
+      />
+      
+      {/* Content container - not blurred */}
+      <div className="container-custom relative z-10">
         {/* Hero Banner */}
         <div className="relative h-80 rounded-3xl overflow-hidden mb-12">
           <div 
@@ -69,11 +88,19 @@ const ToursPage = () => {
         </div>
         
         {/* Filters and Search */}
-        <div className="glass-card p-6 mb-8">
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.65)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          borderRadius: '0.5rem',
+          padding: '1.5rem'
+        }} className="mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Search */}
             <div>
-              <label htmlFor="search" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
                 Search
               </label>
               <input
@@ -88,7 +115,7 @@ const ToursPage = () => {
             
             {/* Duration Filter */}
             <div>
-              <label htmlFor="duration" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-1">
                 Duration
               </label>
               <select
@@ -106,7 +133,7 @@ const ToursPage = () => {
             
             {/* Sort By */}
             <div>
-              <label htmlFor="sort" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="sort" className="block text-sm font-medium text-gray-700 mb-1">
                 Sort By
               </label>
               <select
@@ -126,8 +153,14 @@ const ToursPage = () => {
         </div>
         
         {/* Results Count */}
-        <div className="mb-6">
-          <p className="text-[var(--text-secondary)]">
+        <div className="mb-6 inline-block px-4 py-2 rounded-lg" style={{
+          background: 'rgba(255, 255, 255, 0.6)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.3)'
+        }}>
+          <p className="text-gray-700 font-medium">
             Showing {sortedTours.length} tour {sortedTours.length === 1 ? 'package' : 'packages'}
           </p>
         </div>
@@ -161,15 +194,21 @@ const ToursPage = () => {
         )}
         
         {/* Call to Action */}
-        <div className="mt-16 bg-[var(--secondary)] bg-opacity-10 rounded-2xl p-8 text-center">
-          <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-4">
+        <div className="mt-16 p-8 text-center rounded-2xl" style={{
+          background: 'rgba(0, 0, 0, 0.6)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.1)'
+        }}>
+          <h2 className="text-2xl font-bold text-white mb-4">
             Can't find what you're looking for?
           </h2>
-          <p className="text-[var(--text-secondary)] mb-6 max-w-2xl mx-auto">
+          <p className="text-gray-200 mb-6 max-w-2xl mx-auto">
             We specialize in creating personalized tour packages tailored to your preferences.
             Tell us what you're interested in, and we'll design the perfect itinerary for you.
           </p>
-          <Link href="/enquiry" className="btn-primary inline-block">
+          <Link href="/enquiry" className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg inline-block transition-colors">
             Request Custom Tour
           </Link>
         </div>
@@ -189,7 +228,17 @@ const TourCard: React.FC<TourCardProps> = ({ tour, index }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="card group"
+      style={{
+        background: 'rgba(255, 255, 255, 0.75)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1), 0 0 15px rgba(255, 255, 255, 0.5)',
+        border: '1px solid rgba(255, 255, 255, 0.3)',
+        borderRadius: '0.5rem',
+        overflow: 'hidden',
+        transition: 'all 0.3s ease'
+      }}
+      className="hover:shadow-xl hover:translate-y-[-5px]"
     >
       <div className="relative h-60 w-full overflow-hidden">
         <Image
@@ -215,31 +264,6 @@ const TourCard: React.FC<TourCardProps> = ({ tour, index }) => {
           {tour.description}
         </p>
 
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-[var(--secondary)]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span className="ml-1 text-[var(--text-secondary)]">
-              {tour.duration} days
-            </span>
-          </div>
-          <div className="text-xl font-bold text-[var(--primary)]">
-            ${tour.price}
-          </div>
-        </div>
-
         <div className="flex flex-wrap gap-2 mb-4">
           {tour.attractions.slice(0, 3).map((attraction, idx) => (
             <span
@@ -259,7 +283,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour, index }) => {
         <div className="flex justify-between items-center">
           <Link
             href={`/tours/${tour.id}`}
-            className="block w-full text-center py-2 bg-[var(--desert)] text-[var(--text-primary)] rounded-lg font-medium hover:bg-[var(--accent)] hover:text-white transition-colors"
+            className="block w-full text-center py-2 bg-[var(--desert)] text-black font-semibold rounded-lg hover:bg-[var(--accent)] hover:text-white transition-colors"
           >
             View Details
           </Link>

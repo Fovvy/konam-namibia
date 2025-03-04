@@ -23,6 +23,16 @@ export interface Vehicle {
   features: string[];
   available: boolean;
   created_at: string;
+  description?: string;
+  category?: string;
+  passengers?: number;
+  transmission?: string;
+  fuelType?: string;
+  airConditioning?: boolean;
+  driveType?: string;
+  luggageSpace?: string;
+  minRental?: number;
+  pricePerDay?: number;
 }
 
 export interface Booking {

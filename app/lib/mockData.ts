@@ -14,6 +14,7 @@ export const mockTours: TourPackage[] = [
     inclusions: ['Accommodation', 'Transportation', 'Guide', 'Most meals', 'Park entrance fees'],
     exclusions: ['International flights', 'Travel insurance', 'Personal expenses'],
     created_at: '2024-01-15T00:00:00Z',
+    itinerary: sevenDayNamibiaItinerary
   },
   {
     id: '2',
@@ -27,6 +28,7 @@ export const mockTours: TourPackage[] = [
     inclusions: ['Safari lodges', '4x4 Game drives', 'Professional guide', 'All meals', 'Park entrance fees'],
     exclusions: ['International flights', 'Travel insurance', 'Personal expenses'],
     created_at: '2024-01-20T00:00:00Z',
+    itinerary: sevenDayNamibiaItinerary
   },
   {
     id: '3',
@@ -54,6 +56,7 @@ export const mockTours: TourPackage[] = [
     inclusions: ['Accommodation', 'Transportation', 'Guide', 'Most meals', 'Activities'],
     exclusions: ['International flights', 'Travel insurance', 'Personal expenses'],
     created_at: '2024-02-10T00:00:00Z',
+    itinerary: southernAfricaTour
   },
   {
     id: '5',
@@ -67,6 +70,7 @@ export const mockTours: TourPackage[] = [
     inclusions: ['Cultural lodges', 'Transportation', 'Cultural guide', 'All meals', 'Community contributions'],
     exclusions: ['International flights', 'Travel insurance', 'Personal expenses'],
     created_at: '2024-02-15T00:00:00Z',
+    itinerary: southernAfricaTour
   },
   {
     id: '6',
@@ -80,6 +84,7 @@ export const mockTours: TourPackage[] = [
     inclusions: ['Camping equipment', 'Guide', 'All meals during trek', 'Support vehicle'],
     exclusions: ['International flights', 'Travel insurance', 'Personal expenses'],
     created_at: '2024-02-20T00:00:00Z',
+    itinerary: southernAfricaTour
   },
   {
     id: '7',
@@ -97,16 +102,30 @@ export const mockTours: TourPackage[] = [
   },
   {
     id: '8',
+    title: 'Namibia Photography Tour',
+    description: 'Capture the incredible landscapes of Namibia with our specialized photography tour, led by professional photographers.',
+    price: 2399,
+    duration: 12,
+    image: '/images/namibia-photography.jpg',
+    featured: false,
+    attractions: ['Sossusvlei', 'Kolmanskop Ghost Town', 'Quiver Tree Forest', 'Fish River Canyon'],
+    inclusions: ['Accommodation', 'Transportation', 'Photography guide', 'Most meals', 'Park entrance fees'],
+    exclusions: ['International flights', 'Travel insurance', 'Personal expenses', 'Camera equipment'],
+    created_at: '2024-02-25T00:00:00Z',
+    itinerary: fourDayNamibiaItinerary
+  },
+  {
+    id: '9',
     title: 'Southern Africa Explorer (Namibia Section)',
     description: 'Experience the incredible landscapes of Southern Africa with this multi-country tour. This package showcases the Namibian portion of the journey.',
     price: 1299,
-    duration: 4,
+    duration: 6,
     image: '/images/southern-africa.jpg',
-    featured: true,
-    attractions: ['Swakopmund', 'Sandwich Harbor', 'Namib Desert', 'Sossusvlei', 'Deadvlei', 'Windhoek'],
-    inclusions: ['3-4 star accommodations', 'Transportation', 'Professional guide', 'Some meals', 'Park entrance fees'],
-    exclusions: ['International flights', 'Travel insurance', 'Personal expenses', 'Optional activities'],
-    created_at: '2024-03-10T00:00:00Z',
+    featured: false,
+    attractions: ['Windhoek', 'Kalahari Desert', 'Fish River Canyon', 'Lüderitz'],
+    inclusions: ['Accommodation', 'Transportation', 'Guide', 'Most meals', 'Park entrance fees'],
+    exclusions: ['International flights', 'Travel insurance', 'Personal expenses', 'Visa fees'],
+    created_at: '2024-03-01T00:00:00Z',
     itinerary: southernAfricaTour
   }
 ];

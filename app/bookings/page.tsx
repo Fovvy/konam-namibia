@@ -336,9 +336,9 @@ const BookingsPage = () => {
                   <p className="text-gray-500 text-sm mb-6">Final price will be confirmed upon booking.</p>
                   <Link
                     href="/enquiry"
-                    className="block text-center text-orange-500 hover:text-orange-600 font-medium"
+                    className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mt-4"
                   >
-                    Need a custom itinerary? Make an enquiry →
+                    Need a custom itinerary? Create Custom Itinerary →
                   </Link>
                 </div>
               )}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -33,6 +33,10 @@ const HeroSection = () => {
   const [departureDate, setDepartureDate] = useState('');
   const router = useRouter();
 
+  // References to date inputs
+  const arrivalInputRef = useRef<HTMLInputElement>(null);
+  const departureInputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % heroBackgrounds.length);
@@ -45,6 +49,13 @@ const HeroSection = () => {
     e.preventDefault();
     if (arrivalDate && departureDate) {
       router.push(`/bookings?startDate=${arrivalDate}&endDate=${departureDate}`);
+    }
+  };
+
+  // Function to trigger date picker
+  const openDatePicker = (inputRef: React.RefObject<HTMLInputElement>) => {
+    if (inputRef.current) {
+      inputRef.current.showPicker();
     }
   };
 
@@ -91,7 +102,7 @@ const HeroSection = () => {
             {/* Mini Date Submission Form */}
             <form 
               onSubmit={handleBookNow}
-              className="flex flex-col md:flex-row gap-4 justify-center items-center mb-6 max-w-xl mx-auto bg-black/30 p-4 rounded-lg"
+              className="flex flex-col md:flex-row gap-6 justify-center items-center mb-8 max-w-2xl mx-auto bg-black/30 p-6 rounded-lg"
             >
               <div className="flex flex-col w-full md:w-auto">
                 <label htmlFor="arrivalDate" className="flex items-center gap-2 text-sm mb-1 text-white">
@@ -100,14 +111,27 @@ const HeroSection = () => {
                   </svg>
                   Arrival Date
                 </label>
-                <input
-                  id="arrivalDate"
-                  type="date"
-                  value={arrivalDate}
-                  onChange={(e) => setArrivalDate(e.target.value)}
-                  className="p-2 rounded-md text-gray-900 w-full md:w-40"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    id="arrivalDate"
+                    ref={arrivalInputRef}
+                    type="date"
+                    value={arrivalDate}
+                    onChange={(e) => setArrivalDate(e.target.value)}
+                    className="p-2 rounded-md text-gray-900 w-full md:w-48 pr-8"
+                    placeholder="mm/dd/yyyy"
+                    required
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => openDatePicker(arrivalInputRef)}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer border-0 bg-transparent"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </button>
+                </div>
               </div>
               
               <div className="flex flex-col w-full md:w-auto">
@@ -117,19 +141,32 @@ const HeroSection = () => {
                   </svg>
                   Departure Date
                 </label>
-                <input
-                  id="departureDate"
-                  type="date"
-                  value={departureDate}
-                  onChange={(e) => setDepartureDate(e.target.value)}
-                  className="p-2 rounded-md text-gray-900 w-full md:w-40"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    id="departureDate"
+                    ref={departureInputRef}
+                    type="date"
+                    value={departureDate}
+                    onChange={(e) => setDepartureDate(e.target.value)}
+                    className="p-2 rounded-md text-gray-900 w-full md:w-48 pr-8"
+                    placeholder="mm/dd/yyyy"
+                    required
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => openDatePicker(departureInputRef)}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer border-0 bg-transparent"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </button>
+                </div>
               </div>
 
               <button
                 type="submit"
-                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-md transition-colors mt-4 md:mt-6 w-full md:w-auto"
+                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-md transition-colors mt-2 md:mt-6 w-full md:w-auto font-medium"
               >
                 Book Now
               </button>
@@ -140,7 +177,7 @@ const HeroSection = () => {
                 Explore Tours
               </Link>
               <Link href="/enquiry" className="btn-secondary">
-                Make an Enquiry
+                Custom Itinerary
               </Link>
             </div>
           </motion.div>

@@ -10,7 +10,7 @@ const navItems = [
   { name: 'Tour Packages', href: '/tours' },
   { name: 'Vehicle Rentals', href: '/vehicles' },
   { name: 'Bookings', href: '/bookings' },
-  { name: 'Enquire', href: '/enquiry' },
+  { name: 'Custom Itinerary', href: '/enquiry' },
   { name: 'Reviews', href: '/reviews' },
 ];
 
@@ -38,8 +38,8 @@ const Header = () => {
     <header
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white bg-opacity-80 backdrop-blur-md shadow-md py-1'
-          : 'bg-black bg-opacity-30 backdrop-blur-sm py-3'
+          ? 'bg-white shadow-md py-1'
+          : 'bg-white bg-opacity-90 backdrop-blur-sm py-3'
       }`}
     >
       <div className="container-custom mx-auto flex justify-between items-center">

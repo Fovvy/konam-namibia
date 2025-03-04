@@ -124,7 +124,7 @@ const EnquiryPage = () => {
               transition={{ duration: 0.5 }}
             >
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                Make an Enquiry
+                Custom Itinerary
               </h1>
               <p className="text-xl text-white max-w-2xl mx-auto korean-text">
                 당신의 나미비아 여행을 계획해 드립니다

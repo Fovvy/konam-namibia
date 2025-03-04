@@ -50,7 +50,7 @@ export default function Home() {
               href="/enquiry"
               className="inline-block px-8 py-4 bg-white text-[var(--korean-blue)] rounded-full font-bold text-lg hover:bg-gray-100 transition-colors hover:scale-105 transform duration-300"
             >
-              Make an Enquiry
+              Custom Itinerary
             </Link>
           </motion.div>
         </div>
