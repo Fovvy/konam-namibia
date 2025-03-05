@@ -2,6 +2,7 @@
 import React from 'react';
 import { mockVehicles } from '@/app/lib/mockData';
 import VehicleDetailClient from './VehicleDetailClient';
+import { Metadata } from 'next';
 
 // This function is required for static exports 
 export async function generateStaticParams() {

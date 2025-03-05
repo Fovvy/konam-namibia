@@ -10,10 +10,10 @@ import { TourPackage, Vehicle } from '../lib/types';
 
 const BookingsPage = () => {
   const searchParams = useSearchParams();
-  const tourId = searchParams?.get('tour') || null;
-  const vehicleId = searchParams?.get('vehicle') || null;
-  const startDateParam = searchParams?.get('startDate') || null;
-  const endDateParam = searchParams?.get('endDate') || null;
+  const tourId = searchParams.get('tour');
+  const vehicleId = searchParams.get('vehicle');
+  const startDateParam = searchParams.get('startDate');
+  const endDateParam = searchParams.get('endDate');
 
   const [selectedTour, setSelectedTour] = useState<TourPackage | null>(
     tourId ? mockTours.find(tour => tour.id === tourId) || null : null

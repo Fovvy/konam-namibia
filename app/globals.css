@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
 
@@ -29,9 +27,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
-    background-image: url('namibiab-desert-road.jpg');
-  }
+  background-image: url('namibiab-desert-road.jpg');
   :root {
     --foreground: #000000;
     --text-primary: #000000;
