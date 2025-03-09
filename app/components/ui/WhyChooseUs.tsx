@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+'use client';
+
+import React from 'react';
+import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
 import '../../styles/flags.css';
 
 // Flag animation component with welcome message
 const KoreaNamibiaConnection: React.FC = () => {
-  const [ref, inView] = useInView({
+  const [ref] = useInView({
     triggerOnce: true,
     threshold: 0.2,
   });
@@ -86,9 +89,8 @@ const KoreaNamibiaConnection: React.FC = () => {
           className="text-center mt-16 welcome-description"
         >
           <p className="text-gray-700 text-lg mx-auto max-w-4xl">
-            Experience the best of both worlds with our exclusive travel packages tailored 
-            for adventurers seeking unique cultural experiences. Our team of experts will guide
-            you through unforgettable journeys in Korea and Namibia.
+            Experience the magic of two nations in one journey - providing you with an authentic and enriching travel
+            experience that you&apos;ll cherish forever!
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">

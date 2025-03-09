@@ -4,15 +4,22 @@ import React from 'react';
 import Image from 'next/image';
 
 interface SelectableCardProps {
-  id: string;
   image: string;
   title: string;
   subtitle?: string;
   isSelected: boolean;
   onClick: () => void;
+  id?: string; // Optional id, not used directly in the component
 }
 
-const SelectableCard = ({ id, image, title, subtitle, isSelected, onClick }: SelectableCardProps) => {
+const SelectableCard: React.FC<SelectableCardProps> = ({
+  image,
+  title,
+  subtitle,
+  isSelected,
+  onClick,
+  // id is intentionally not destructured as it's not used
+}) => {
   return (
     <div 
       onClick={onClick}

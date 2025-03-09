@@ -12,9 +12,6 @@ import { motion } from 'framer-motion';
 import { mockTours, mockReviews, partnerLogos } from './lib/mockData';
 
 export default function Home() {
-  // Use only featured tours for homepage
-  const featuredTours = mockTours.filter(tour => tour.featured);
-
   return (
     <>
       {/* Hero Section */}

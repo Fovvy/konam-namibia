@@ -83,9 +83,15 @@ const FeaturedCubeSlider: React.FC<FeaturedCubeSliderProps> = ({ tours }) => {
             transition={{ duration: 0.5 }}
             className="content text-white order-2 md:order-1 text-center md:text-left"
           >
-            <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6">Let's Travel The World Together!</h1>
+            <div className="text-center mb-10">
+              <h2 className="text-4xl font-bold mb-4 text-white">Let&#39;s Travel the World Together</h2>
+              <p className="text-xl text-white/70 max-w-3xl mx-auto">
+                Experience Namibia&#39;s wonders through our carefully crafted tour packages
+              </p>
+            </div>
+            <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6">Let&#39;s Travel The World Together!</h1>
             <p className="text-base md:text-lg mb-6 md:mb-8 max-w-2xl mx-auto md:mx-0">
-              Our tours are designed to transport you to the heart of Namibia's
+              Our tours are designed to transport you to the heart of Namibia&#39;s
               most captivating destinations, creating memories that will last a
               lifetime. You can uncover the hidden gems, iconic landmarks, and
               unique cultural treasures that make each destination special.

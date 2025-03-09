@@ -117,7 +117,10 @@ const PopularDestinations = () => {
           <span className="text-orange-500 uppercase tracking-wide font-bold text-sm">Top Destinations</span>
           <h2 className="text-4xl md:text-5xl font-bold text-navy-900 mt-2 mb-4">Popular Destinations</h2>
           <p className="text-gray-600 max-w-2xl">
-            Experience the beauty and diversity of Namibia with our carefully curated travel packages that showcase the country's most breathtaking destinations.
+            Experience the beauty and diversity of Namibia with our carefully curated travel packages that showcase the country&apos;s most breathtaking destinations.
+          </p>
+          <p className="text-gray-300 text-md mb-4">
+            From the surreal red dunes of Sossusvlei to the stark beauty of Skeleton Coast, Namibia&apos;s landscapes will leave you in awe.
           </p>
         </div>
 

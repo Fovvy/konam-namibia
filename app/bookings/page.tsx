@@ -1,10 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
 import { mockTours, mockVehicles, mockBookings } from '../lib/mockData';
 import { TourPackage, Vehicle } from '../lib/types';
 import '../styles/selectableCards.css';
@@ -17,12 +15,8 @@ const BookingsPage = () => {
   const startDateParam = searchParams?.get('startDate') || null;
   const endDateParam = searchParams?.get('endDate') || null;
 
-  const [selectedTour, setSelectedTour] = useState<TourPackage | null>(
-    tourId ? mockTours.find(tour => tour.id === tourId) || null : null
-  );
-  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(
-    vehicleId ? mockVehicles.find(vehicle => vehicle.id === vehicleId) || null : null
-  );
+  const [selectedTourId, setSelectedTourId] = useState<string | null>(tourId);
+  const [selectedVehicleId, setSelectedVehicleId] = useState<string | null>(vehicleId);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -47,17 +41,16 @@ const BookingsPage = () => {
     }));
   };
 
-  const handleTourSelect = (tour: TourPackage) => {
-      setSelectedTour(tour);
+  const handleTourSelect = (tourId: string) => {
+    setSelectedTourId((prev: string | null) => (prev === tourId ? null : tourId));
   };
 
   const handleVehicleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const id = e.target.value;
     if (id === '') {
-      setSelectedVehicle(null);
+      setSelectedVehicleId(null);
     } else {
-      const vehicle = mockVehicles.find(v => v.id === id) || null;
-      setSelectedVehicle(vehicle);
+      setSelectedVehicleId(id);
     }
   };
 
@@ -85,10 +78,12 @@ const BookingsPage = () => {
     // Calculate total price
     let totalPrice = 0;
     
+    const selectedTour = mockTours.find(tour => tour.id === selectedTourId) || null;
     if (selectedTour) {
       totalPrice += selectedTour.price * (formData.numAdults + formData.numChildren * 0.7);
     }
     
+    const selectedVehicle = mockVehicles.find(vehicle => vehicle.id === selectedVehicleId) || null;
     if (selectedVehicle) {
       // Assuming the rental is for the duration of the tour
       const tourDuration = selectedTour?.duration || 1;
@@ -99,13 +94,13 @@ const BookingsPage = () => {
     const newBooking = {
       id: (mockBookings.length + 1).toString(),
       user_id: 'guest', // In a real app, this would be a logged-in user's ID
-      tour_package_id: selectedTour?.id || null,
-      vehicle_id: selectedVehicle?.id || null,
+      tour_package_id: selectedTourId || null,
+      vehicle_id: selectedVehicleId || null,
       start_date: formData.startDate,
       end_date: formData.endDate,
       num_people: formData.numAdults + formData.numChildren,
       total_price: totalPrice,
-      status: 'pending' as 'pending',
+      status: 'pending' as const,
       created_at: new Date().toISOString(),
       customer_name: `${formData.firstName} ${formData.lastName}`,
       customer_email: formData.email,
@@ -272,8 +267,8 @@ const BookingsPage = () => {
                         image={tour.image}
                         title={tour.title}
                         subtitle={`${tour.duration} days - $${tour.price}/person`}
-                        isSelected={selectedTour?.id === tour.id}
-                        onClick={() => handleTourSelect(tour)}
+                        isSelected={selectedTourId === tour.id}
+                        onClick={() => handleTourSelect(tour.id)}
                       />
                     ))}
                   </div>
@@ -284,7 +279,7 @@ const BookingsPage = () => {
                 <select
                   id="vehicle"
                   name="vehicle"
-                  value={selectedVehicle?.id || ''}
+                  value={selectedVehicleId || ''}
                   onChange={handleVehicleChange}
                   className="w-full rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
                 >
@@ -367,38 +362,38 @@ const BookingsPage = () => {
             <div className="bg-white rounded-lg shadow-sm p-8 sticky top-32">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">Booking Summary</h2>
               
-              {(selectedTour || selectedVehicle) ? (
+              {(selectedTourId || selectedVehicleId) ? (
                 <>
-              {selectedTour && (
+              {selectedTourId && (
                     <div className="mb-6 pb-6 border-b border-gray-200">
                       <h3 className="font-semibold text-gray-800 mb-2">Tour Package</h3>
                       <div className="flex items-start">
                         <div className="relative w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
-                          <Image src={selectedTour.image} alt={selectedTour.title} fill className="object-cover" />
+                          <Image src={mockTours.find(tour => tour.id === selectedTourId)?.image} alt={mockTours.find(tour => tour.id === selectedTourId)?.title} fill className="object-cover" />
                         </div>
                         <div className="ml-3">
-                          <p className="font-medium text-gray-800">{selectedTour.title}</p>
-                          <p className="text-sm text-gray-600">{selectedTour.duration} days</p>
+                          <p className="font-medium text-gray-800">{mockTours.find(tour => tour.id === selectedTourId)?.title}</p>
+                          <p className="text-sm text-gray-600">{mockTours.find(tour => tour.id === selectedTourId)?.duration} days</p>
                           <p className="text-orange-500 font-medium mt-1">
-                            ${selectedTour.price} x {formData.numAdults + formData.numChildren} people
+                            ${mockTours.find(tour => tour.id === selectedTourId)?.price} x {formData.numAdults + formData.numChildren} people
                           </p>
                         </div>
                       </div>
                     </div>
                   )}
                   
-                  {selectedVehicle && (
+                  {selectedVehicleId && (
                     <div className="mb-6 pb-6 border-b border-gray-200">
                       <h3 className="font-semibold text-gray-800 mb-2">Vehicle Rental</h3>
                       <div className="flex items-start">
                         <div className="relative w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
-                          <Image src={selectedVehicle.image} alt={selectedVehicle.name} fill className="object-cover" />
+                          <Image src={mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.image} alt={mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.name} fill className="object-cover" />
                         </div>
                         <div className="ml-3">
-                          <p className="font-medium text-gray-800">{selectedVehicle.name}</p>
-                          <p className="text-sm text-gray-600">Capacity: {selectedVehicle.capacity} people</p>
+                          <p className="font-medium text-gray-800">{mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.name}</p>
+                          <p className="text-sm text-gray-600">Capacity: {mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.capacity} people</p>
                           <p className="text-orange-500 font-medium mt-1">
-                            ${selectedVehicle.price_per_day} x {selectedTour?.duration || 1} days
+                            ${mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.price_per_day} x {mockTours.find(tour => tour.id === selectedTourId)?.duration || 1} days
                           </p>
                         </div>
                   </div>
@@ -414,19 +409,19 @@ const BookingsPage = () => {
                       <span className="text-gray-600">Children</span>
                       <span className="font-medium">{formData.numChildren}</span>
                     </div>
-                    {selectedTour && (
+                    {selectedTourId && (
                       <div className="flex justify-between mb-2">
                         <span className="text-gray-600">Tour Subtotal</span>
                         <span className="font-medium">
-                          ${(selectedTour.price * (formData.numAdults + formData.numChildren * 0.7)).toFixed(2)}
+                          ${(mockTours.find(tour => tour.id === selectedTourId)?.price * (formData.numAdults + formData.numChildren * 0.7)).toFixed(2)}
                         </span>
                       </div>
                     )}
-                    {selectedVehicle && selectedTour && (
+                    {selectedVehicleId && selectedTourId && (
                       <div className="flex justify-between mb-2">
                         <span className="text-gray-600">Vehicle Rental</span>
                         <span className="font-medium">
-                          ${(selectedVehicle.price_per_day * selectedTour.duration).toFixed(2)}
+                          ${(mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.price_per_day * mockTours.find(tour => tour.id === selectedTourId)?.duration).toFixed(2)}
                         </span>
                       </div>
                     )}
@@ -437,8 +432,8 @@ const BookingsPage = () => {
                       <span className="text-lg font-bold text-gray-800">Total</span>
                       <span className="text-2xl font-bold text-orange-500">
                         ${(
-                          (selectedTour ? selectedTour.price * (formData.numAdults + formData.numChildren * 0.7) : 0) +
-                          (selectedVehicle && selectedTour ? selectedVehicle.price_per_day * selectedTour.duration : 0)
+                          (mockTours.find(tour => tour.id === selectedTourId)?.price * (formData.numAdults + formData.numChildren * 0.7) || 0) +
+                          (mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.price_per_day * mockTours.find(tour => tour.id === selectedTourId)?.duration || 0)
                         ).toFixed(2)}
                       </span>
                 </div>

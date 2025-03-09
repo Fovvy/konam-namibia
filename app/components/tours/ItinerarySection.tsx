@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Activity } from '@/app/lib/types';
 import { mockTours } from '@/app/lib/mockData';
@@ -30,7 +30,7 @@ const ItinerarySection: React.FC<ItinerarySectionProps> = ({ tourId }) => {
     }
   };
 
-  const [showAccommodation, setShowAccommodation] = useState<number | null>(null);
+  const [showAccommodation, setShowAccommodation] = React.useState<number | null>(null);
 
   if (itinerary.length === 0) {
     return (
