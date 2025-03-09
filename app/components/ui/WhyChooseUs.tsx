@@ -53,25 +53,15 @@ const KoreaNamibiaConnection: React.FC = () => {
         </motion.div>
 
         <div className="flags-container">
-          {/* Floating Korean Flag */}
-          <motion.div 
-            className="floating-flag"
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.2 }}
-          >
+          {/* Fixed Korean Flag */}
+          <div className="flag-wrapper">
             <div className="flag korea-flag"></div>
-          </motion.div>
+          </div>
 
-          {/* Floating Namibian Flag */}
-          <motion.div 
-            className="floating-flag"
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.4 }}
-          >
+          {/* Fixed Namibian Flag */}
+          <div className="flag-wrapper">
             <div className="flag namibia-flag"></div>
-          </motion.div>
+          </div>
         </div>
 
         <motion.p 

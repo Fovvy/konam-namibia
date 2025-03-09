@@ -286,14 +286,15 @@
   }
 }
 
-.floating-flag {
-  animation: float 6s ease-in-out infinite;
-  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.15));
+.flag-wrapper {
+  position: relative;
+  animation: hover 4s ease-in-out infinite;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
 }
 
 .flag {
-  width: 180px;
-  height: 120px;
+  width: 200px;
+  height: 140px;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -307,12 +308,12 @@
   background-image: url('/images/flags/namibia-flag.svg');
 }
 
-@keyframes float {
+@keyframes hover {
   0% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-15px);
   }
   100% {
     transform: translateY(0px);
