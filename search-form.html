@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Travel Search Form</title>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins&display=swap'>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f5f5;
+    }
+    .search-container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .search-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .search-input {
+      position: relative;
+      width: 100%;
+    }
+    .search-input input {
+      width: 100%;
+      padding: 12px 15px 12px 40px;
+      border: 1px solid #e3e5e8;
+      border-radius: 4px;
+      font-size: 16px;
+      outline: none;
+    }
+    .search-input input:focus {
+      border-color: #8b58e3;
+    }
+    .search-row {
+      display: flex;
+      gap: 20px;
+    }
+    .travel-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: inline-block;
+      vertical-align: -23%;
+      height: 1.2em;
+      width: 1.2em;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: auto 1.2em;
+    }
+    .travel-img-icon-plane-taking-off-transparent {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238f98a3'><path d='M2.5 19h19v2h-19v-2zm19.57-9.36c-.21-.8-1.04-1.28-1.84-1.06L14.92 10l-6.9-6.43-1.93.51 4.14 7.17-4.97 1.33-1.97-1.54-1.45.39 2.59 4.49s7.12-1.9 16.57-4.43c.81-.23 1.28-1.05 1.07-1.85z'/></svg>");
+    }
+    .travel-img-icon-plane-landing-transparent {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238f98a3'><path d='M2.5 19h19v2h-19v-2zm7.18-5.73l4.35 1.16 5.31 1.42c.8.21 1.62-.26 1.84-1.06.21-.8-.26-1.62-1.06-1.84l-5.31-1.42-2.76-9.02L10.12 2v8.28L5.15 8.95l-.93-2.32-1.45-.39v5.17l1.6.43 5.31 1.43z'/></svg>");
+    }
+    .find-button {
+      background-color: #8b58e3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .find-button:hover {
+      background-color: #7645d1;
+    }
+    .search-location {
+      flex: 2;
+    }
+    @media (max-width: 768px) {
+      .search-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="search-container">
+    <form class="search-form">
+      <div class="search-input search-location">
+        <div class="travel-icon" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"%238f98a3\"><path d=\"M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z\"/></svg>');"></div>
+        <input type="text" placeholder="Where would you like to go?">
+      </div>
+      
+      <div class="search-row">
+        <div class="search-input">
+          <div class="travel-icon travel-img-icon-plane-taking-off-transparent"></div>
+          <input type="text" placeholder="Departure">
+        </div>
+        
+        <div class="search-input">
+          <div class="travel-icon travel-img-icon-plane-landing-transparent"></div>
+          <input type="text" placeholder="Return">
+        </div>
+      </div>
+      
+      <button class="find-button">Find Adventures & Tours</button>
+    </form>
+  </div>
+</body>
+</html>

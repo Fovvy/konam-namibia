@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { mockVehicles } from '../lib/mockData';
 import { Vehicle } from '../lib/types';
 
@@ -11,6 +12,12 @@ const VehiclesPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
   const [sortBy, setSortBy] = useState('default');
+  const router = useRouter();
+  
+  // Redirect to list view on component mount
+  useEffect(() => {
+    router.push('/vehicles/list');
+  }, [router]);
   
   // Filter vehicles based on search term and type
   const filteredVehicles = mockVehicles.filter(vehicle => {
@@ -87,6 +94,14 @@ const VehiclesPage = () => {
               <p className="text-xl text-white max-w-2xl mx-auto korean-text">
                 나미비아를 자유롭게 탐험하세요
               </p>
+              <div className="mt-6 flex justify-center space-x-4">
+                <span className="px-4 py-2 rounded-full bg-orange-500 text-white">
+                  Grid View
+                </span>
+                <Link href="/vehicles/list" className="px-4 py-2 rounded-full bg-white text-gray-800 hover:bg-gray-100 transition">
+                  List View
+                </Link>
+              </div>
             </motion.div>
           </div>
         </div>

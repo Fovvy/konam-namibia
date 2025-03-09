@@ -3,26 +3,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const heroBackgrounds = [
   {
-    image: '/images/namibia-desert.jpg',
-    title: 'Experience Namibia',
+    image: '/images/hero/IMG-20250217-WA0045.jpg',
+    title: 'Namibian Adventures',
     subtitle: '나미비아의 경이로움을 발견하세요',
-    description: 'Explore the vast deserts, wildlife, and culture of Namibia with our tailored Korean tour packages.',
+    description: 'Explore the vast Namib Desert and experience unforgettable moments with our tailored Korean tour packages.',
   },
   {
-    image: '/images/etosha-wildlife.jpg',
+    image: '/images/hero/IMG-20250217-WA0041.jpg',
+    title: 'Coastal Beauty',
+    subtitle: '해안의 아름다움',
+    description: 'Witness breathtaking sunsets where the Namib Desert meets the Atlantic Ocean along Namibia\'s spectacular coastline.',
+  },
+  {
+    image: '/images/hero/WhatsApp Image 2025-02-17 at 13.48.46_668fafba.jpg',
     title: 'Safari Adventures',
     subtitle: '사파리 모험',
-    description: 'Get up close with the amazing wildlife of Namibia at Etosha National Park.',
-  },
-  {
-    image: '/images/sossusvlei.jpg',
-    title: 'Desert Wonders',
-    subtitle: '사막의 놀라움',
-    description: 'Experience the breathtaking beauty of Sossusvlei and the famous red dunes.',
+    description: 'Get up close with the amazing wildlife of Namibia at Etosha National Park and other wilderness areas.',
   },
 ];
 
@@ -32,13 +32,17 @@ const HeroSection = () => {
   const [departureDate, setDepartureDate] = useState('');
   const router = useRouter();
 
-  // References to date inputs
+  // References to date inputs with proper typing
   const arrivalInputRef = useRef<HTMLInputElement>(null);
   const departureInputRef = useRef<HTMLInputElement>(null);
 
+  // Auto-rotate slides
   useEffect(() => {
+    // Only run on client side
+    if (typeof window === 'undefined') return;
+    
     const intervalId = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % heroBackgrounds.length);
+      setCurrentSlide((prev) => (prev + 1) % heroBackgrounds.length);
     }, 5000);
 
     return () => clearInterval(intervalId);
@@ -51,151 +55,166 @@ const HeroSection = () => {
     }
   };
 
-  // Function to trigger date picker
-  const openDatePicker = (inputRef: React.RefObject<HTMLInputElement>) => {
-    if (inputRef.current) {
-      inputRef.current.showPicker();
+  // Text animation variants
+  const textVariants = {
+    hidden: { 
+      opacity: 0,
+      x: -50,
+      clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)" 
+    },
+    visible: { 
+      opacity: 1,
+      x: 0,
+      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+      transition: {
+        duration: 1,
+        ease: "easeOut"
+      }
+    },
+    exit: { 
+      opacity: 0,
+      x: 50,
+      clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
+      transition: {
+        duration: 0.7,
+        ease: "easeIn"
+      }
     }
   };
 
   return (
-    <div className="relative h-[85vh] overflow-hidden">
+    <div className="relative h-screen overflow-hidden bg-navy-900">
       {/* Background Images */}
-      {heroBackgrounds.map((bg, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
-          }`}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSlide}
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2 }}
         >
-          {/* This is a placeholder - in a real app, you would have your actual images */}
           <div 
             className="w-full h-full bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${bg.image})`,
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${heroBackgrounds[currentSlide].image})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
           />
-        </div>
-      ))}
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Hero Content */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="container-custom text-center text-white z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-2">
-              {heroBackgrounds[currentSlide].title}
-            </h1>
-            <h2 className="text-2xl md:text-3xl mb-4 korean-text">
-              {heroBackgrounds[currentSlide].subtitle}
-            </h2>
-            <p className="text-xl md:text-2xl mb-6 max-w-2xl mx-auto">
-              {heroBackgrounds[currentSlide].description}
-            </p>
-
-            {/* Mini Date Submission Form */}
-            <form 
-              onSubmit={handleBookNow}
-              className="flex flex-col md:flex-row gap-6 justify-center items-center mb-8 max-w-2xl mx-auto bg-black/30 p-6 rounded-lg"
+      {/* Hero Content - Safari Style Text */}
+      <div className="absolute inset-0 flex items-center justify-start">
+        <div className="text-white z-10 pl-8 md:pl-16 lg:pl-24 max-w-3xl ml-0">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="mb-12"
             >
-              <div className="flex flex-col w-full md:w-auto">
-                <label htmlFor="arrivalDate" className="flex items-center gap-2 text-sm mb-1 text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  Arrival Date
-                </label>
-                <div className="relative">
-                  <input
-                    id="arrivalDate"
-                    ref={arrivalInputRef}
-                    type="date"
-                    value={arrivalDate}
-                    onChange={(e) => setArrivalDate(e.target.value)}
-                    className="p-2 rounded-md text-gray-900 w-full md:w-48 pr-8"
-                    placeholder="mm/dd/yyyy"
-                    required
-                  />
-                  <button 
-                    type="button"
-                    onClick={() => openDatePicker(arrivalInputRef)}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer border-0 bg-transparent"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              
-              <div className="flex flex-col w-full md:w-auto">
-                <label htmlFor="departureDate" className="flex items-center gap-2 text-sm mb-1 text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-4 4L5 7" />
-                  </svg>
-                  Departure Date
-                </label>
-                <div className="relative">
-                  <input
-                    id="departureDate"
-                    ref={departureInputRef}
-                    type="date"
-                    value={departureDate}
-                    onChange={(e) => setDepartureDate(e.target.value)}
-                    className="p-2 rounded-md text-gray-900 w-full md:w-48 pr-8"
-                    placeholder="mm/dd/yyyy"
-                    required
-                  />
-                  <button 
-                    type="button"
-                    onClick={() => openDatePicker(departureInputRef)}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer border-0 bg-transparent"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+              <motion.h2 
+                className="text-4xl md:text-5xl font-bold mb-3 font-serif"
+                variants={textVariants}
+                style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}
+              >
+                <span className="text-orange-500">
+                  {heroBackgrounds[currentSlide].title.split(' ')[0]}
+                </span>{' '}
+                <span className="text-white">
+                  {heroBackgrounds[currentSlide].title.split(' ').slice(1).join(' ')}
+                </span>
+              </motion.h2>
+              <motion.h1 
+                className="text-5xl md:text-7xl font-bold mb-4 text-white font-serif tracking-wide"
+                variants={textVariants}
+                transition={{ delay: 0.1 }}
+                style={{
+                  WebkitTextStroke: '1.5px white',
+                  textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+                }}
+              >
+                {heroBackgrounds[currentSlide].subtitle}
+              </motion.h1>
+              <motion.p 
+                className="text-xl md:text-2xl mb-8 font-light leading-relaxed"
+                variants={textVariants}
+                transition={{ delay: 0.2 }}
+                style={{ textShadow: '0 1px 3px rgba(0, 0, 0, 0.3)' }}
+              >
+                {heroBackgrounds[currentSlide].description}
+              </motion.p>
+            </motion.div>
+          </AnimatePresence>
 
-              <button
-                type="submit"
-                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-md transition-colors mt-2 md:mt-6 w-full md:w-auto font-medium"
+          {/* Mini Date Submission Form */}
+          <form 
+            onSubmit={handleBookNow}
+            className="flex flex-col md:flex-row gap-5 mb-6 bg-white/15 p-6 rounded-lg backdrop-blur-sm w-full md:w-auto"
+          >
+            <div className="flex flex-col w-full md:w-auto">
+              <label htmlFor="arrivalDate" className="flex items-center gap-2 text-base mb-2 text-white font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="white">
+                  <path d="M2.5 19h19v2h-19v-2zm7.18-5.73l4.35 1.16 5.31 1.42c.8.21 1.62-.26 1.84-1.06.21-.8-.26-1.62-1.06-1.84l-5.31-1.42-2.76-9.02L10.12 2v8.28L5.15 8.95l-.93-2.32-1.45-.39v5.17l1.6.43 5.31 1.43z" />
+                </svg>
+                Arrival Date
+              </label>
+              <div className="relative">
+                <input
+                  id="arrivalDate"
+                  ref={arrivalInputRef}
+                  type="date"
+                  value={arrivalDate}
+                  onChange={(e) => setArrivalDate(e.target.value)}
+                  className="p-3 rounded-md bg-navy-900/50 text-white w-full md:w-52 border border-white/30 placeholder-white"
+                  placeholder="mm/dd/yyyy"
+                  required
+                  style={{
+                    colorScheme: 'dark',
+                    color: 'white'
+                  }}
+                />
+              </div>
+            </div>
+            
+            <div className="flex flex-col w-full md:w-auto">
+              <label htmlFor="departureDate" className="flex items-center gap-2 text-base mb-2 text-white font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="white">
+                  <path d="M2.5 19h19v2h-19v-2zm19.57-9.36c-.21-.8-1.04-1.28-1.84-1.06L14.92 10l-6.9-6.43-1.93.51 4.14 7.17-4.97 1.33-1.97-1.54-1.45.39 2.59 4.49s7.12-1.9 16.57-4.43c.81-.23 1.28-1.05 1.07-1.85z" />
+                </svg>
+                Departure Date
+              </label>
+              <div className="relative">
+                <input
+                  id="departureDate"
+                  ref={departureInputRef}
+                  type="date"
+                  value={departureDate}
+                  onChange={(e) => setDepartureDate(e.target.value)}
+                  className="p-3 rounded-md bg-navy-900/50 text-white w-full md:w-52 border border-white/30 placeholder-white" 
+                  placeholder="mm/dd/yyyy"
+                  required
+                  style={{
+                    colorScheme: 'dark',
+                    color: 'white'
+                  }}
+                />
+              </div>
+            </div>
+            
+            <div className="flex items-end">
+              <button 
+                type="submit" 
+                className="bg-orange-500 hover:bg-orange-600 w-full md:w-auto transition-colors text-white font-bold py-3 px-10 rounded-md text-lg"
               >
                 Book Now
               </button>
-            </form>
-
-            <div className="flex gap-4 justify-center">
-              <Link href="/tours" className="btn-primary">
-                Explore Tours
-              </Link>
-              <Link href="/enquiry" className="btn-secondary">
-                Custom Itinerary
-              </Link>
             </div>
-          </motion.div>
+          </form>
         </div>
-      </div>
-
-      {/* Hero Navigation Dots */}
-      <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
-        {heroBackgrounds.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              index === currentSlide
-                ? 'bg-white scale-125'
-                : 'bg-white/50 hover:bg-white/80'
-            }`}
-          />
-        ))}
       </div>
     </div>
   );

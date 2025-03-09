@@ -4,10 +4,14 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 const Footer = () => {
+  const pathname = usePathname();
+  const isToursOrVehiclesPage = pathname?.includes('/tours') || pathname?.includes('/vehicles');
+
   return (
-    <footer className="bg-gray-100 text-gray-800 pt-12 pb-6">
+    <footer className={`text-gray-800 pt-12 pb-6 relative z-50 ${isToursOrVehiclesPage ? 'bg-white' : 'bg-gray-100'}`}>
       <div className="container-custom mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Company Info */}
@@ -146,7 +150,7 @@ const Footer = () => {
           </motion.div>
         </div>
         
-        <div className="border-t border-gray-200 mt-8 pt-6">
+        <div className={`border-t mt-8 pt-6 ${isToursOrVehiclesPage ? 'border-gray-300' : 'border-gray-200'}`}>
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 text-sm">
               &copy; {new Date().getFullYear()} KoNam Tours. All rights reserved.

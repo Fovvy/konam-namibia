@@ -1,19 +1,21 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { mockTours, mockVehicles } from '../lib/mockData';
+import { mockTours, mockVehicles, mockBookings } from '../lib/mockData';
 import { TourPackage, Vehicle } from '../lib/types';
+import '../styles/selectableCards.css';
+import SelectableCard from '../components/ui/SelectableCard';
 
 const BookingsPage = () => {
   const searchParams = useSearchParams();
-  const tourId = searchParams.get('tour');
-  const vehicleId = searchParams.get('vehicle');
-  const startDateParam = searchParams.get('startDate');
-  const endDateParam = searchParams.get('endDate');
+  const tourId = searchParams?.get('tour') || null;
+  const vehicleId = searchParams?.get('vehicle') || null;
+  const startDateParam = searchParams?.get('startDate') || null;
+  const endDateParam = searchParams?.get('endDate') || null;
 
   const [selectedTour, setSelectedTour] = useState<TourPackage | null>(
     tourId ? mockTours.find(tour => tour.id === tourId) || null : null
@@ -27,7 +29,8 @@ const BookingsPage = () => {
     lastName: '',
     email: '',
     phone: '',
-    numPeople: 1,
+    numAdults: searchParams?.get('people') ? parseInt(searchParams?.get('people') || '1') : 1,
+    numChildren: 0,
     startDate: startDateParam || '',
     endDate: endDateParam || '',
     additionalRequests: '',
@@ -44,14 +47,8 @@ const BookingsPage = () => {
     }));
   };
 
-  const handleTourChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const id = e.target.value;
-    if (id === '') {
-      setSelectedTour(null);
-    } else {
-      const tour = mockTours.find(t => t.id === id) || null;
+  const handleTourSelect = (tour: TourPackage) => {
       setSelectedTour(tour);
-    }
   };
 
   const handleVehicleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -64,38 +61,84 @@ const BookingsPage = () => {
     }
   };
 
+  const handleAdultChange = (increment: boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      numAdults: increment 
+        ? Math.min(prev.numAdults + 1, 10) 
+        : Math.max(prev.numAdults - 1, 1)
+    }));
+  };
+
+  const handleChildChange = (increment: boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      numChildren: increment 
+        ? Math.min(prev.numChildren + 1, 10) 
+        : Math.max(prev.numChildren - 1, 0)
+    }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Booking submitted! We will contact you shortly to confirm your reservation.');
-    // In a real application, we would submit the form data to a backend API
+    
+    // Calculate total price
+    let totalPrice = 0;
+    
+    if (selectedTour) {
+      totalPrice += selectedTour.price * (formData.numAdults + formData.numChildren * 0.7);
+    }
+    
+    if (selectedVehicle) {
+      // Assuming the rental is for the duration of the tour
+      const tourDuration = selectedTour?.duration || 1;
+      totalPrice += selectedVehicle.price_per_day * tourDuration;
+    }
+    
+    // Create a new booking
+    const newBooking = {
+      id: (mockBookings.length + 1).toString(),
+      user_id: 'guest', // In a real app, this would be a logged-in user's ID
+      tour_package_id: selectedTour?.id || null,
+      vehicle_id: selectedVehicle?.id || null,
+      start_date: formData.startDate,
+      end_date: formData.endDate,
+      num_people: formData.numAdults + formData.numChildren,
+      total_price: totalPrice,
+      status: 'pending' as 'pending',
+      created_at: new Date().toISOString(),
+      customer_name: `${formData.firstName} ${formData.lastName}`,
+      customer_email: formData.email,
+      customer_phone: formData.phone,
+      adults: formData.numAdults,
+      children: formData.numChildren,
+      notes: formData.additionalRequests
+    };
+    
+    // In a real app, this would be saved to a database
+    // For now, we're just pushing to the mock array
+    mockBookings.push(newBooking);
+    
+    // Alert success
+    alert(`Booking confirmed! Total price: $${totalPrice.toFixed(2)}`);
+  };
+
+  const getNumberOfPeople = () => {
+    return formData.numAdults + formData.numChildren;
   };
 
   return (
     <main className="pt-32 pb-16">
       <div className="container-custom mx-auto">
-        <section className="py-12 bg-gray-900 text-white">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="container-custom"
-          >
-            <h1 className="text-4xl font-bold mb-2 text-white">Book Your Namibian Adventure</h1>
-            <p className="text-gray-300">Fill out the form below to book your tour or vehicle rental.</p>
-          </motion.div>
-        </section>
-
-        <div className="grid md:grid-cols-3 gap-8">
+        <h1 className="text-4xl font-bold text-gray-800 mb-12 text-center">Book Your Namibian Adventure</h1>
+        
+        <div className="grid lg:grid-cols-3 gap-12">
           {/* Booking Form */}
-          <motion.div 
-            className="md:col-span-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800">Booking Details</h2>
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-lg shadow-sm p-8">
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">Your Details</h2>
               
+              <form onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label htmlFor="firstName" className="block text-gray-700 font-medium mb-2">First Name</label>
@@ -150,23 +193,91 @@ const BookingsPage = () => {
                 </div>
               </div>
 
+                {/* People Count with Icons */}
               <div className="mb-6">
-                <label htmlFor="tourPackage" className="block text-gray-700 font-medium mb-2">Tour Package</label>
-                <select
-                  id="tourPackage"
-                  name="tourPackage"
-                  value={selectedTour?.id || ''}
-                  onChange={handleTourChange}
-                  className="w-full rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                >
-                  <option value="">-- Select a Tour Package --</option>
-                  {mockTours.map(tour => (
-                    <option key={tour.id} value={tour.id}>
-                      {tour.title} - ${tour.price} ({tour.duration} days)
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  <label className="block text-gray-700 font-medium mb-2">Number of Travelers</label>
+                  <div className="flex flex-wrap gap-6">
+                    <div className="flex items-center bg-gray-50 p-4 rounded-lg">
+                      <div className="text-orange-500 mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                      </div>
+                      <div className="font-medium">Adults</div>
+                      <div className="flex items-center ml-auto">
+                        <button 
+                          type="button" 
+                          onClick={() => handleAdultChange(false)}
+                          className="w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded-full focus:outline-none"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                          </svg>
+                        </button>
+                        <span className="w-10 text-center font-medium">{formData.numAdults}</span>
+                        <button 
+                          type="button" 
+                          onClick={() => handleAdultChange(true)}
+                          className="w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded-full focus:outline-none"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center bg-gray-50 p-4 rounded-lg">
+                      <div className="text-orange-500 mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 8.25H9m6 3H9m3 6-3-3h1.5a3 3 0 1 0 0-6M12 19.5v-15" />
+                        </svg>
+                      </div>
+                      <div className="font-medium">Children</div>
+                      <div className="flex items-center ml-auto">
+                        <button 
+                          type="button" 
+                          onClick={() => handleChildChange(false)}
+                          className="w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded-full focus:outline-none"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                          </svg>
+                        </button>
+                        <span className="w-10 text-center font-medium">{formData.numChildren}</span>
+                        <button 
+                          type="button" 
+                          onClick={() => handleChildChange(true)}
+                          className="w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded-full focus:outline-none"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tours as clickable images with new card design */}
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-3">Select Your Tour Package</h2>
+                  <p className="text-gray-500 mb-4">Choose the perfect adventure for your Namibian journey</p>
+                  
+                  <div className="selectable-card-container">
+                    {mockTours.map(tour => (
+                      <SelectableCard
+                        key={tour.id}
+                        id={tour.id}
+                        image={tour.image}
+                        title={tour.title}
+                        subtitle={`${tour.duration} days - $${tour.price}/person`}
+                        isSelected={selectedTour?.id === tour.id}
+                        onClick={() => handleTourSelect(tour)}
+                      />
+                    ))}
+                  </div>
+                </div>
 
               <div className="mb-6">
                 <label htmlFor="vehicle" className="block text-gray-700 font-medium mb-2">Vehicle Rental (Optional)</label>
@@ -178,28 +289,17 @@ const BookingsPage = () => {
                   className="w-full rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
                 >
                   <option value="">-- Select a Vehicle (Optional) --</option>
-                  {mockVehicles.filter(v => v.available).map(vehicle => (
+                    {mockVehicles
+                      .filter(vehicle => vehicle.available && vehicle.capacity >= getNumberOfPeople())
+                      .map(vehicle => (
                     <option key={vehicle.id} value={vehicle.id}>
-                      {vehicle.name} - ${vehicle.price_per_day}/day (Seats {vehicle.capacity})
+                          {vehicle.name} - ${vehicle.price_per_day}/day (Capacity: {vehicle.capacity})
                     </option>
                   ))}
                 </select>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6 mb-6">
-                <div>
-                  <label htmlFor="numPeople" className="block text-gray-700 font-medium mb-2">Number of People</label>
-                  <input
-                    type="number"
-                    id="numPeople"
-                    name="numPeople"
-                    min="1"
-                    value={formData.numPeople}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
-                </div>
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label htmlFor="startDate" className="block text-gray-700 font-medium mb-2">Start Date</label>
                   <input
@@ -231,15 +331,14 @@ const BookingsPage = () => {
                 <textarea
                   id="additionalRequests"
                   name="additionalRequests"
-                  rows={4}
                   value={formData.additionalRequests}
                   onChange={handleInputChange}
+                    rows={4}
                   className="w-full rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  placeholder="Any special requirements, dietary restrictions, or other requests..."
                 ></textarea>
               </div>
 
-              <div className="mb-8">
+                <div className="mb-6">
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -247,122 +346,109 @@ const BookingsPage = () => {
                     checked={formData.agreeTerms}
                     onChange={handleInputChange}
                     required
-                    className="rounded border-gray-300 text-orange-500 focus:ring-orange-500 mr-3"
+                      className="mr-2 h-5 w-5 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                   />
-                  <span className="text-gray-700">
-                    I agree to the <Link href="/terms" className="text-orange-500 hover:underline">Terms and Conditions</Link>
-                  </span>
+                    <span className="text-gray-700">I agree to the terms and conditions</span>
                 </label>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-md transition-colors"
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-md transition-colors w-full"
               >
-                Book Now
+                  Complete Booking
               </button>
             </form>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Booking Summary */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <div className="bg-gray-50 rounded-lg shadow-lg p-6 sticky top-32">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800">Booking Summary</h2>
+          <div>
+            <div className="bg-white rounded-lg shadow-sm p-8 sticky top-32">
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">Booking Summary</h2>
               
+              {(selectedTour || selectedVehicle) ? (
+                <>
               {selectedTour && (
-                <div className="mb-6">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-700">Selected Tour</h3>
-                  <div className="bg-white rounded-md p-4 shadow-sm">
-                    <div className="relative h-40 w-full mb-4 overflow-hidden rounded-md">
-                      <Image
-                        src={selectedTour.image}
-                        alt={selectedTour.title}
-                        fill
-                        className="object-cover"
-                      />
+                    <div className="mb-6 pb-6 border-b border-gray-200">
+                      <h3 className="font-semibold text-gray-800 mb-2">Tour Package</h3>
+                      <div className="flex items-start">
+                        <div className="relative w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
+                          <Image src={selectedTour.image} alt={selectedTour.title} fill className="object-cover" />
+                        </div>
+                        <div className="ml-3">
+                          <p className="font-medium text-gray-800">{selectedTour.title}</p>
+                          <p className="text-sm text-gray-600">{selectedTour.duration} days</p>
+                          <p className="text-orange-500 font-medium mt-1">
+                            ${selectedTour.price} x {formData.numAdults + formData.numChildren} people
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <h4 className="font-bold text-lg mb-1">{selectedTour.title}</h4>
-                    <p className="text-gray-600 mb-2">{selectedTour.duration} Days</p>
-                    <p className="text-orange-500 font-bold">${selectedTour.price} per person</p>
+                  )}
+                  
+                  {selectedVehicle && (
+                    <div className="mb-6 pb-6 border-b border-gray-200">
+                      <h3 className="font-semibold text-gray-800 mb-2">Vehicle Rental</h3>
+                      <div className="flex items-start">
+                        <div className="relative w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
+                          <Image src={selectedVehicle.image} alt={selectedVehicle.name} fill className="object-cover" />
+                        </div>
+                        <div className="ml-3">
+                          <p className="font-medium text-gray-800">{selectedVehicle.name}</p>
+                          <p className="text-sm text-gray-600">Capacity: {selectedVehicle.capacity} people</p>
+                          <p className="text-orange-500 font-medium mt-1">
+                            ${selectedVehicle.price_per_day} x {selectedTour?.duration || 1} days
+                          </p>
+                        </div>
                   </div>
                 </div>
               )}
 
-              {selectedVehicle && (
                 <div className="mb-6">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-700">Selected Vehicle</h3>
-                  <div className="bg-white rounded-md p-4 shadow-sm">
-                    <div className="relative h-32 w-full mb-4 overflow-hidden rounded-md">
-                      <Image
-                        src={selectedVehicle.image}
-                        alt={selectedVehicle.name}
-                        fill
-                        className="object-cover"
-                      />
+                    <div className="flex justify-between mb-2">
+                      <span className="text-gray-600">Adults</span>
+                      <span className="font-medium">{formData.numAdults}</span>
                     </div>
-                    <h4 className="font-bold text-lg mb-1">{selectedVehicle.name}</h4>
-                    <p className="text-gray-600 mb-2">Capacity: {selectedVehicle.capacity} people</p>
-                    <p className="text-orange-500 font-bold">${selectedVehicle.price_per_day} per day</p>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-gray-600">Children</span>
+                      <span className="font-medium">{formData.numChildren}</span>
+                    </div>
+                    {selectedTour && (
+                      <div className="flex justify-between mb-2">
+                        <span className="text-gray-600">Tour Subtotal</span>
+                        <span className="font-medium">
+                          ${(selectedTour.price * (formData.numAdults + formData.numChildren * 0.7)).toFixed(2)}
+                        </span>
+                      </div>
+                    )}
+                    {selectedVehicle && selectedTour && (
+                      <div className="flex justify-between mb-2">
+                        <span className="text-gray-600">Vehicle Rental</span>
+                        <span className="font-medium">
+                          ${(selectedVehicle.price_per_day * selectedTour.duration).toFixed(2)}
+                        </span>
+                      </div>
+                    )}
                   </div>
+                  
+                  <div className="pt-4 border-t border-gray-200">
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg font-bold text-gray-800">Total</span>
+                      <span className="text-2xl font-bold text-orange-500">
+                        ${(
+                          (selectedTour ? selectedTour.price * (formData.numAdults + formData.numChildren * 0.7) : 0) +
+                          (selectedVehicle && selectedTour ? selectedVehicle.price_per_day * selectedTour.duration : 0)
+                        ).toFixed(2)}
+                      </span>
                 </div>
-              )}
-
-              {!selectedTour && !selectedVehicle ? (
-                <div className="text-center p-6">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  <p className="text-gray-500">
-                    Select a tour or vehicle to see your booking summary
-                  </p>
-                </div>
+                  </div>
+                </>
               ) : (
-                <div className="mt-8 pt-6 border-t border-gray-200">
-                  <div className="flex justify-between text-lg mb-2">
-                    <span className="font-medium">Subtotal:</span>
-                    <span>
-                      ${(selectedTour ? selectedTour.price * formData.numPeople : 0) +
-                        (selectedVehicle && formData.startDate && formData.endDate 
-                          ? selectedVehicle.price_per_day * Math.max(1, Math.floor((new Date(formData.endDate).getTime() - new Date(formData.startDate).getTime()) / (1000 * 60 * 60 * 24)))
-                          : 0
-                        )
-                      }
-                    </span>
-                  </div>
-                  <p className="text-gray-500 text-sm mb-6">Final price will be confirmed upon booking.</p>
-                  <Link
-                    href="/enquiry"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mt-4"
-                  >
-                    Need a custom itinerary? Create Custom Itinerary →
-                  </Link>
-                </div>
+                <p className="text-gray-500">Please select a tour package or vehicle to see your booking summary.</p>
               )}
-              
-              <div className="mt-8">
-                <h3 className="font-semibold mb-2">Need Help?</h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  Our team is available to assist you with your booking. Contact us:
-                </p>
-                <div className="flex items-center mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-orange-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  <span className="text-gray-700">+264 61 123 4567</span>
-                </div>
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-orange-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  <span className="text-gray-700">info@konamtours.com</span>
-                </div>
-              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </main>

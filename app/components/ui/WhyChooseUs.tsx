@@ -1,140 +1,119 @@
-'use client';
+import React, { useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import '../../styles/flags.css';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+// Flag animation component with welcome message
+const KoreaNamibiaConnection: React.FC = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
 
-const features = [
-  {
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-12 w-12 text-[var(--primary)]"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-        />
-      </svg>
-    ),
-    title: 'Korean-Focused Service',
-    titleKorean: '한국인 맞춤 서비스',
-    description:
-      'Our team includes Korean-speaking guides and staff who understand your needs and preferences.',
-  },
-  {
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-12 w-12 text-[var(--primary)]"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-        />
-      </svg>
-    ),
-    title: 'Customized Itineraries',
-    titleKorean: '맞춤형 여행 일정',
-    description:
-      'We create personalized tour packages based on your interests, budget, and travel preferences.',
-  },
-  {
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-12 w-12 text-[var(--primary)]"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"
-        />
-      </svg>
-    ),
-    title: 'Local Expertise',
-    titleKorean: '현지 전문 지식',
-    description:
-      'Our deep knowledge of Namibia ensures you discover hidden gems and authentic experiences.',
-  },
-  {
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-12 w-12 text-[var(--primary)]"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
-    ),
-    title: 'Value for Money',
-    titleKorean: '합리적인 가격',
-    description:
-      'Competitive pricing without compromising on quality, comfort, and memorable experiences.',
-  },
-];
-
-const WhyChooseUs = () => {
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-gray-50">
-      <div className="container-custom">
+    <section className="bg-gray-50 py-20 px-4 overflow-hidden">
+      <div className="container mx-auto max-w-7xl" ref={ref}>
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-10"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4">
-            Why Choose KoNam Tours?
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-navy-900 mb-4">
+            Welcome to KoNam Tours
           </h2>
-          <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
-            We specialize in creating unforgettable Namibian experiences for Korean travelers
+          <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
+            Bringing the beauty of Korea and Namibia together for an unforgettable experience
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition-shadow"
-            >
-              <div className="mx-auto mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-bold mb-1 text-[var(--text-primary)]">
-                {feature.title}
-              </h3>
-              <p className="text-sm font-medium mb-4 korean-text text-[var(--primary)]">
-                {feature.titleKorean}
-              </p>
-              <p className="text-[var(--text-secondary)]">{feature.description}</p>
-            </motion.div>
-          ))}
+        <div className="flag-container">
+          {/* Korean Flag */}
+          <div className="flag-wrapper korea">
+            <div className="flag-inner">
+              <div className="circle"></div>
+              <div className="trigram trigram__1">
+                <div className="line"></div>
+                <div className="line"></div>
+                <div className="line"></div>
+              </div>
+              <div className="trigram trigram__2">
+                <div className="line"></div>
+                <div className="line"></div>
+                <div className="line"></div>
+              </div>
+              <div className="trigram trigram__3">
+                <div className="line"></div>
+                <div className="line"></div>
+                <div className="line"></div>
+              </div>
+              <div className="trigram trigram__4">
+                <div className="line"></div>
+                <div className="line"></div>
+                <div className="line"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Namibian Flag */}
+          <div className="flag-wrapper namibia">
+            <div className="flag-inner">
+              <div className="top-triangle"></div>
+              <div className="bottom-triangle"></div>
+              <div className="diagonal-stripe"></div>
+              <div className="white-stripes">
+                <div className="stripe"></div>
+                <div className="stripe"></div>
+              </div>
+              <div className="sun">
+                <div className="ray"></div>
+                <div className="ray"></div>
+                <div className="ray"></div>
+                <div className="ray"></div>
+                <div className="ray"></div>
+                <div className="ray"></div>
+                <div className="ray"></div>
+                <div className="ray"></div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-center mt-16 welcome-description"
+        >
+          <p className="text-gray-700 text-lg mx-auto max-w-4xl">
+            Experience the best of both worlds with our exclusive travel packages tailored 
+            for adventurers seeking unique cultural experiences. Our team of experts will guide
+            you through unforgettable journeys in Korea and Namibia.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300">
+              <div className="text-3xl text-orange-500 mb-4">🌟</div>
+              <h3 className="text-xl font-semibold mb-2">Expert Local Guides</h3>
+              <p className="text-gray-600">Discover hidden gems with our experienced local guides who speak your language</p>
+            </div>
+            
+            <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300">
+              <div className="text-3xl text-orange-500 mb-4">🏨</div>
+              <h3 className="text-xl font-semibold mb-2">Premium Accommodations</h3>
+              <p className="text-gray-600">Stay in carefully selected hotels and lodges that offer comfort and authentic experiences</p>
+            </div>
+            
+            <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300">
+              <div className="text-3xl text-orange-500 mb-4">⭐</div>
+              <h3 className="text-xl font-semibold mb-2">Customized Experiences</h3>
+              <p className="text-gray-600">Tailor your journey to match your interests, whether it's culture, wildlife, or adventure</p>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
-export default WhyChooseUs;
+export default KoreaNamibiaConnection;

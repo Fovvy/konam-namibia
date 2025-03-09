@@ -3,9 +3,10 @@
 import React from 'react';
 import HeroSection from './components/ui/HeroSection';
 import AutoCarousel from './components/ui/AutoCarousel';
-import FeaturedTours from './components/ui/FeaturedTours';
-import WhyChooseUs from './components/ui/WhyChooseUs';
+import FeaturedCubeSlider from './components/ui/FeaturedCubeSlider';
+import KoreaNamibiaConnection from './components/ui/WhyChooseUs';
 import Testimonials from './components/ui/Testimonials';
+import PopularDestinations from './components/ui/PopularDestinations';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { mockTours, mockReviews, partnerLogos } from './lib/mockData';
@@ -19,14 +20,11 @@ export default function Home() {
       {/* Hero Section */}
       <HeroSection />
       
-      {/* Auto Carousel for Partner Logos */}
-      <AutoCarousel 
-        logos={partnerLogos} 
-        title="Our Trusted Partners"
-      />
+      {/* Popular Destinations */}
+      <PopularDestinations />
       
-      {/* Featured Tours */}
-      <FeaturedTours tours={featuredTours} />
+      {/* Featured Cube Slider Section */}
+      <FeaturedCubeSlider tours={mockTours.slice(0, 4)} />
       
       {/* Call to Action - Enquiry */}
       <section className="py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
@@ -57,10 +55,16 @@ export default function Home() {
       </section>
       
       {/* Why Choose Us */}
-      <WhyChooseUs />
+      <KoreaNamibiaConnection />
       
       {/* Testimonials */}
       <Testimonials reviews={mockReviews} />
+      
+      {/* Auto Carousel for Partner Logos */}
+      <AutoCarousel 
+        logos={partnerLogos} 
+        title="Our Trusted Partners"
+      />
       
       {/* Call to Action - Booking */}
       <section className="py-16 bg-[var(--desert)] bg-opacity-30">

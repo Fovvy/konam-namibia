@@ -33,6 +33,12 @@ export interface Vehicle {
   luggageSpace?: string;
   minRental?: number;
   pricePerDay?: number;
+  price?: {
+    hourly: number;
+    daily: number;
+    weekly: number;
+  };
+  passengerCapacity?: number;
 }
 
 export interface Booking {
@@ -46,6 +52,12 @@ export interface Booking {
   total_price: number;
   status: 'pending' | 'confirmed' | 'cancelled';
   created_at: string;
+  customer_name: string;
+  customer_email: string;
+  customer_phone: string;
+  adults: number;
+  children: number;
+  notes?: string;
 }
 
 export interface Review {

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { mockTours } from '../lib/mockData';
 import { TourPackage } from '../lib/types';
+import '../styles/selectableCards.css';
 
 const ToursPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -167,7 +168,7 @@ const ToursPage = () => {
         
         {/* Tour Packages Grid */}
         {sortedTours.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="listing-grid">
             {sortedTours.map((tour, index) => (
               <TourCard key={tour.id} tour={tour} index={index} />
             ))}

@@ -17,7 +17,9 @@ type Props = {
 };
 
 export default async function TourDetails({ params }: Props) {
-  const tour = mockTours.find((t) => t.id === params.id);
+  // Ensure params is fully resolved before accessing the id
+  const { id } = params;
+  const tour = mockTours.find((t) => t.id === id);
 
   if (!tour) {
     return <div className="min-h-screen flex items-center justify-center">Tour not found</div>;

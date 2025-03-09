@@ -1,0 +1,267 @@
+/* Flag Animation Styles */
+.flag-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.flag-wrapper {
+  position: relative;
+  min-height: 220px;
+  min-width: 330px;
+  border-radius: 10px;
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.flag-wrapper:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.flag-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Korea Flag Specific Styles */
+.flag-wrapper.korea .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(33deg);
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background: red;
+  border-bottom: 50px solid blue;
+}
+
+.flag-wrapper.korea .circle::before {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: red;
+  border-radius: 50%;
+  top: 50%;
+  left: 0;
+}
+
+.flag-wrapper.korea .circle::after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: blue;
+  border-radius: 50%;
+  right: 0;
+  top: 50%;
+}
+
+.trigram {
+  height: 35px;
+  width: 55px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.trigram .line {
+  height: 27%;
+  width: 100%;
+  background: black;
+}
+
+.trigram__1 {
+  top: 70px;
+  left: 70px;
+  transform: rotate(-55deg);
+}
+
+.trigram__2 {
+  top: 70px;
+  right: 70px;
+  transform: rotate(55deg);
+}
+
+.trigram__2 .line:nth-of-type(odd) {
+  position: relative;
+}
+
+.trigram__2 .line:nth-of-type(odd)::before {
+  content: '';
+  width: 7px;
+  height: 100%;
+  background: white;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.trigram__3 {
+  bottom: 70px;
+  left: 70px;
+  transform: rotate(55deg);
+}
+
+.trigram__3 .line:nth-of-type(even) {
+  position: relative;
+}
+
+.trigram__3 .line:nth-of-type(even)::before {
+  content: '';
+  width: 7px;
+  height: 100%;
+  background: white;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.trigram__4 {
+  bottom: 70px;
+  right: 70px;
+  transform: rotate(-55deg);
+}
+
+.trigram__4 .line {
+  position: relative;
+}
+
+.trigram__4 .line::before {
+  content: '';
+  width: 7px;
+  height: 100%;
+  background: white;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Namibia Flag Specific Styles */
+.flag-wrapper.namibia .diagonal-stripe {
+  position: absolute;
+  width: 150%;
+  height: 70px;
+  background-color: #008C45; /* Green */
+  transform: rotate(-35deg) translateX(-50%);
+  left: 50%;
+  top: 50%;
+}
+
+.flag-wrapper.namibia .top-triangle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 110px;
+  background-color: #002D8A; /* Blue */
+}
+
+.flag-wrapper.namibia .bottom-triangle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 110px;
+  background-color: #d21034; /* Red */
+}
+
+.flag-wrapper.namibia .white-stripes {
+  position: absolute;
+  width: 100%;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.flag-wrapper.namibia .white-stripes .stripe {
+  height: 15px;
+  width: 100%;
+  background: white;
+}
+
+.flag-wrapper.namibia .sun {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 50px;
+  height: 50px;
+  background: #F7D618; /* Yellow */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flag-wrapper.namibia .sun .ray {
+  position: absolute;
+  background: #F7D618;
+  width: 8px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.flag-wrapper.namibia .sun .ray:nth-child(1) { transform: rotate(0deg) translateY(-30px); }
+.flag-wrapper.namibia .sun .ray:nth-child(2) { transform: rotate(45deg) translateY(-30px); }
+.flag-wrapper.namibia .sun .ray:nth-child(3) { transform: rotate(90deg) translateY(-30px); }
+.flag-wrapper.namibia .sun .ray:nth-child(4) { transform: rotate(135deg) translateY(-30px); }
+.flag-wrapper.namibia .sun .ray:nth-child(5) { transform: rotate(180deg) translateY(-30px); }
+.flag-wrapper.namibia .sun .ray:nth-child(6) { transform: rotate(225deg) translateY(-30px); }
+.flag-wrapper.namibia .sun .ray:nth-child(7) { transform: rotate(270deg) translateY(-30px); }
+.flag-wrapper.namibia .sun .ray:nth-child(8) { transform: rotate(315deg) translateY(-30px); }
+
+/* Animations */
+@keyframes flagFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flag-wrapper {
+  opacity: 0;
+  animation: flagFadeIn 1s forwards;
+}
+
+.flag-wrapper.korea {
+  animation-delay: 0.3s;
+}
+
+.flag-wrapper.namibia {
+  animation-delay: 0.6s;
+}
+
+.welcome-title {
+  opacity: 0;
+  animation: flagFadeIn 1s 0.9s forwards;
+}
+
+.welcome-description {
+  opacity: 0;
+  animation: flagFadeIn 1s 1.2s forwards;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .flag-container {
+    flex-direction: column;
+  }
+}

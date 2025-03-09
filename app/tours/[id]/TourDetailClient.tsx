@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { TourPackage } from '@/app/lib/types';
+import { TourPackage, Vehicle } from '@/app/lib/types';
 import ItinerarySection from '@/app/components/tours/ItinerarySection';
+import { mockVehicles } from '@/app/lib/mockData';
 
 interface TourDetailClientProps {
   tour: TourPackage;
@@ -14,11 +15,25 @@ export default function TourDetailClient({ tour }: TourDetailClientProps) {
   const router = useRouter();
   const [numPeople, setNumPeople] = useState<number | ''>('');
   const [showPrice, setShowPrice] = useState(false);
+  const [suggestedVehicle, setSuggestedVehicle] = useState<Vehicle | null>(null);
 
   const handlePeopleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value === '' ? '' : Number(e.target.value);
     setNumPeople(value);
     setShowPrice(value !== '');
+    
+    // Suggest appropriate vehicle based on number of people
+    if (value !== '') {
+      const people = Number(value);
+      // Find the smallest vehicle that can accommodate all people
+      const suitableVehicle = mockVehicles
+        .filter(v => v.available && v.capacity >= people)
+        .sort((a, b) => a.capacity - b.capacity)[0] || null;
+      
+      setSuggestedVehicle(suitableVehicle);
+    } else {
+      setSuggestedVehicle(null);
+    }
   };
 
   return (
@@ -85,6 +100,36 @@ export default function TourDetailClient({ tour }: TourDetailClientProps) {
                   </select>
                 </div>
                 
+                {/* Suggested Vehicle Section */}
+                {suggestedVehicle && (
+                  <div className="mb-6 p-4 bg-white rounded-lg border border-gray-200">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Recommended Vehicle</h4>
+                    <div className="flex items-center">
+                      <div className="relative w-20 h-20 rounded-md overflow-hidden mr-3">
+                        <Image 
+                          src={suggestedVehicle.image} 
+                          alt={suggestedVehicle.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-800">{suggestedVehicle.name}</p>
+                        <p className="text-sm text-gray-600">Capacity: {suggestedVehicle.capacity} people</p>
+                        <p className="text-sm text-gray-600">${suggestedVehicle.price_per_day}/day</p>
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <button 
+                        onClick={() => router.push(`/vehicles/${suggestedVehicle.id}`)}
+                        className="text-sm text-orange-500 hover:text-orange-600 font-medium"
+                      >
+                        View Details
+                      </button>
+                    </div>
+                  </div>
+                )}
+                
                 {showPrice && (
                   <div className="mb-6">
                     <p className="text-gray-500 mb-1">Price</p>
@@ -96,7 +141,7 @@ export default function TourDetailClient({ tour }: TourDetailClientProps) {
                 )}
                 
                 <button 
-                  onClick={() => router.push(`/bookings?tour=${tour.id}&people=${numPeople}`)}
+                  onClick={() => router.push(`/bookings?tour=${tour.id}&people=${numPeople}${suggestedVehicle ? `&vehicle=${suggestedVehicle.id}` : ''}`)}
                   disabled={!showPrice}
                   className={`block text-center ${showPrice ? 'bg-orange-500 hover:bg-orange-600 text-white' : 'bg-gray-300 text-gray-700'} font-bold py-3 px-4 rounded-md transition-colors w-full`}
                 >

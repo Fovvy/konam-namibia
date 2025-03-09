@@ -1,4 +1,4 @@
-import { TourPackage, Vehicle, Review } from './types';
+import { TourPackage, Vehicle, Review, Booking } from './types';
 import { fourDayNamibiaItinerary, sevenDayNamibiaItinerary, southernAfricaTour } from './itineraryData';
 
 export const mockTours: TourPackage[] = [
@@ -304,4 +304,61 @@ export const mockReviews: Review[] = [
     user_name: 'Kim Taehyung',
     created_at: '2024-03-05T00:00:00Z',
   },
+];
+
+export const mockBookings: Booking[] = [
+  {
+    id: '1',
+    user_id: 'user1',
+    tour_package_id: '1',
+    vehicle_id: '2',
+    start_date: '2024-06-15',
+    end_date: '2024-06-25',
+    num_people: 2,
+    total_price: 2498,
+    status: 'confirmed',
+    created_at: '2024-03-01T14:30:00Z',
+    customer_name: 'John Smith',
+    customer_email: 'john.smith@example.com',
+    customer_phone: '+1234567890',
+    adults: 2,
+    children: 0,
+    notes: 'Vegetarian meal preferences'
+  },
+  {
+    id: '2',
+    user_id: 'user2',
+    tour_package_id: '3',
+    vehicle_id: null,
+    start_date: '2024-07-10',
+    end_date: '2024-07-15',
+    num_people: 4,
+    total_price: 4796,
+    status: 'pending',
+    created_at: '2024-03-03T09:15:00Z',
+    customer_name: 'Maria Garcia',
+    customer_email: 'maria.garcia@example.com',
+    customer_phone: '+9876543210',
+    adults: 2,
+    children: 2,
+    notes: 'Interested in additional activities'
+  },
+  {
+    id: '3',
+    user_id: 'user3',
+    tour_package_id: null,
+    vehicle_id: '1',
+    start_date: '2024-05-20',
+    end_date: '2024-05-27',
+    num_people: 1,
+    total_price: 560,
+    status: 'confirmed',
+    created_at: '2024-02-25T16:45:00Z',
+    customer_name: 'David Kim',
+    customer_email: 'david.kim@example.com',
+    customer_phone: '+1122334455',
+    adults: 1,
+    children: 0,
+    notes: 'First time in Namibia, looking for recommendations'
+  }
 ];

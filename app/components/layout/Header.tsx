@@ -4,20 +4,20 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 const navItems = [
   { name: 'Home', href: '/' },
   { name: 'Tour Packages', href: '/tours' },
   { name: 'Vehicle Rentals', href: '/vehicles' },
-  { name: 'Bookings', href: '/bookings' },
   { name: 'Custom Itinerary', href: '/enquiry' },
-  { name: 'Reviews', href: '/reviews' },
 ];
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const pathname = usePathname();
+  
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -38,9 +38,21 @@ const Header = () => {
     <header
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white shadow-md py-1'
-          : 'bg-white bg-opacity-90 backdrop-blur-sm py-3'
+          ? 'py-1 shadow-md backdrop-blur-md'
+          : 'py-7'
       }`}
+      style={{
+        background: scrolled 
+          ? `linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)),
+             url('/images/')`
+          : 'transparent',
+        backgroundSize: scrolled ? '200px' : 'auto',
+        backgroundPosition: 'center',
+        backdropFilter: scrolled ? 'blur(8px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(8px)' : 'none',
+        boxShadow: scrolled ? '0 4px 30px rgba(0, 0, 0, 0.1)' : 'none',
+        border: scrolled ? '1px solid rgba(255, 255, 255, 0.3)' : 'none',
+      }}
     >
       <div className="container-custom mx-auto flex justify-between items-center">
         {/* Logo */}
@@ -54,7 +66,7 @@ const Header = () => {
             <Image 
               src={scrolled ? '/images/logo/logo-dark.png' : '/images/logo/logo-orange.png'} 
               alt="KoNam Tours Logo" 
-              width={60}
+              width={65}
               height={50}
               className="transition-all duration-300"
               priority
@@ -63,19 +75,19 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-8">
           {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-gray-800 hover:text-orange-500 font-medium transition-colors text-sm"
+              className={`${scrolled ? 'text-navy-800' : 'text-white'} hover:text-orange-500 font-semibold transition-colors text-base ${!scrolled ? 'bg-black/30 px-3 py-1 rounded-md backdrop-blur-sm' : ''}`}
             >
               {item.name}
             </Link>
           ))}
           <Link
             href="/bookings"
-            className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-md transition-colors text-sm"
+            className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-md transition-colors text-base font-semibold"
           >
             Book Now
           </Link>
@@ -83,7 +95,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-gray-800"
+          className={`md:hidden ${scrolled ? 'text-navy-800' : 'text-white drop-shadow-md'}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? (
@@ -126,7 +138,16 @@ const Header = () => {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-white shadow-lg"
+          className="md:hidden backdrop-blur-md"
+          style={{
+            background: `linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)),
+                         url('/images/hero/patternnnn2.png')`,
+            backgroundSize: '200px',
+            backgroundPosition: 'center',
+            boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.3)',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.3)'
+          }}
         >
           <div className="container mx-auto px-4 py-4">
             <nav className="flex flex-col space-y-4">
@@ -134,7 +155,7 @@ const Header = () => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-800 hover:text-orange-500 font-medium py-2 transition-colors"
+                  className="text-navy-800 hover:text-orange-500 font-medium py-2 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}

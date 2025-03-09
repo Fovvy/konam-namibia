@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#FFFFFF">
+    <path d="M25,5 L5,25 L25,45 L45,25 L25,5 Z"/>
+    <path d="M25,15 L15,25 L25,35 L35,25 L25,15 Z" fill="#0A1128"/>
+    <path d="M25,20 L20,25 L25,30 L30,25 L25,20 Z" fill="#FFFFFF"/>
+  </g>
+</svg>
