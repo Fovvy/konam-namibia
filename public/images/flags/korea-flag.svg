@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+  <rect width="900" height="600" fill="#fff"/>
+  <g transform="translate(450, 300)">
+    <g id="taeguk">
+      <path d="M0,120 a120,120 0 0,1 0,-240 a120,120 0 0,0 0,240" fill="#c70000"/>
+      <path d="M0,-120 a120,120 0 0,1 0,240 a120,120 0 0,0 0,-240" fill="#0047a0"/>
+    </g>
+    <!-- Trigrams -->
+    <!-- Heaven - ☰ (three solid lines) -->
+    <g transform="translate(-154, -154)">
+      <rect y="-24" width="85" height="16" fill="#000"/>
+      <rect width="85" height="16" fill="#000"/>
+      <rect y="24" width="85" height="16" fill="#000"/>
+    </g>
+    <!-- Lake - ☱ (one solid line at top, two broken lines) -->
+    <g transform="translate(154, -154)">
+      <rect y="-24" width="85" height="16" fill="#000"/>
+      <rect width="35" height="16" fill="#000"/>
+      <rect x="50" width="35" height="16" fill="#000"/>
+      <rect y="24" width="35" height="16" fill="#000"/>
+      <rect x="50" y="24" width="35" height="16" fill="#000"/>
+    </g>
+    <!-- Fire - ☲ (broken line in the middle) -->
+    <g transform="translate(-154, 154)">
+      <rect y="-24" width="35" height="16" fill="#000"/>
+      <rect x="50" y="-24" width="35" height="16" fill="#000"/>
+      <rect width="85" height="16" fill="#000"/>
+      <rect y="24" width="85" height="16" fill="#000"/>
+    </g>
+    <!-- Water - ☵ (one solid line at the bottom, two broken lines) -->
+    <g transform="translate(154, 154)">
+      <rect y="-24" width="35" height="16" fill="#000"/>
+      <rect x="50" y="-24" width="35" height="16" fill="#000"/>
+      <rect width="35" height="16" fill="#000"/>
+      <rect x="50" width="35" height="16" fill="#000"/>
+      <rect y="24" width="85" height="16" fill="#000"/>
+    </g>
+  </g>
+</svg>

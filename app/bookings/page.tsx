@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { mockTours, mockVehicles, mockBookings } from '../lib/mockData';
-import { TourPackage, Vehicle } from '../lib/types';
 import '../styles/selectableCards.css';
 import SelectableCard from '../components/ui/SelectableCard';
 
@@ -121,6 +120,24 @@ const BookingsPage = () => {
   const getNumberOfPeople = () => {
     return formData.numAdults + formData.numChildren;
   };
+
+  const selectedTourDetails = mockTours.find(tour => tour.id === selectedTourId);
+  const selectedVehicleDetails = mockVehicles.find(vehicle => vehicle.id === selectedVehicleId);
+
+  const tourImage = selectedTourDetails && selectedTourDetails.image ? selectedTourDetails.image : '/images/default-tour.jpg';
+  const tourTitle = selectedTourDetails?.title || 'Select a Tour';
+
+  const vehicleImage = selectedVehicleDetails && selectedVehicleDetails.image ? selectedVehicleDetails.image : '/images/default-vehicle.jpg';
+  const vehicleName = selectedVehicleDetails?.name || 'Select a Vehicle';
+
+  const numberOfDays = selectedTourDetails?.duration || 1;
+  const totalPrice = 
+    ((selectedTourDetails?.price || 0) * (formData.numAdults + formData.numChildren * 0.7)) + 
+    ((selectedVehicleDetails?.price_per_day || 0) * (selectedTourDetails?.duration || 1));
+  const bookingTotal = `$${Math.round(totalPrice).toLocaleString()}`;
+
+  const selectedStartDate = new Date(formData.startDate);
+  const details = `${selectedTourDetails?.duration || 'N/A'} Days | ${selectedVehicleDetails?.name || 'No Vehicle'} | ${selectedStartDate ? selectedStartDate.toLocaleDateString() : 'No Date'}`;
 
   return (
     <main className="pt-32 pb-16">
@@ -369,13 +386,13 @@ const BookingsPage = () => {
                       <h3 className="font-semibold text-gray-800 mb-2">Tour Package</h3>
                       <div className="flex items-start">
                         <div className="relative w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
-                          <Image src={mockTours.find(tour => tour.id === selectedTourId)?.image} alt={mockTours.find(tour => tour.id === selectedTourId)?.title} fill className="object-cover" />
+                          <Image src={tourImage} alt={tourTitle} fill className="object-cover" />
                         </div>
                         <div className="ml-3">
-                          <p className="font-medium text-gray-800">{mockTours.find(tour => tour.id === selectedTourId)?.title}</p>
-                          <p className="text-sm text-gray-600">{mockTours.find(tour => tour.id === selectedTourId)?.duration} days</p>
+                          <p className="font-medium text-gray-800">{tourTitle}</p>
+                          <p className="text-sm text-gray-600">{selectedTourDetails?.duration} days</p>
                           <p className="text-orange-500 font-medium mt-1">
-                            ${mockTours.find(tour => tour.id === selectedTourId)?.price} x {formData.numAdults + formData.numChildren} people
+                            ${((selectedTourDetails?.price || 0) * (formData.numAdults + formData.numChildren * 0.7)).toFixed(2)}
                           </p>
                         </div>
                       </div>
@@ -387,13 +404,13 @@ const BookingsPage = () => {
                       <h3 className="font-semibold text-gray-800 mb-2">Vehicle Rental</h3>
                       <div className="flex items-start">
                         <div className="relative w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
-                          <Image src={mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.image} alt={mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.name} fill className="object-cover" />
+                          <Image src={vehicleImage} alt={vehicleName} fill className="object-cover" />
                         </div>
                         <div className="ml-3">
-                          <p className="font-medium text-gray-800">{mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.name}</p>
-                          <p className="text-sm text-gray-600">Capacity: {mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.capacity} people</p>
+                          <p className="font-medium text-gray-800">{vehicleName}</p>
+                          <p className="text-sm text-gray-600">Capacity: {selectedVehicleDetails?.capacity} people</p>
                           <p className="text-orange-500 font-medium mt-1">
-                            ${mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.price_per_day} x {mockTours.find(tour => tour.id === selectedTourId)?.duration || 1} days
+                            ${((selectedVehicleDetails?.price_per_day || 0) * (selectedTourDetails?.duration || 1)).toFixed(2)}
                           </p>
                         </div>
                   </div>
@@ -413,7 +430,7 @@ const BookingsPage = () => {
                       <div className="flex justify-between mb-2">
                         <span className="text-gray-600">Tour Subtotal</span>
                         <span className="font-medium">
-                          ${(mockTours.find(tour => tour.id === selectedTourId)?.price * (formData.numAdults + formData.numChildren * 0.7)).toFixed(2)}
+                          ${((selectedTourDetails?.price || 0) * (formData.numAdults + formData.numChildren * 0.7)).toFixed(2)}
                         </span>
                       </div>
                     )}
@@ -421,7 +438,7 @@ const BookingsPage = () => {
                       <div className="flex justify-between mb-2">
                         <span className="text-gray-600">Vehicle Rental</span>
                         <span className="font-medium">
-                          ${(mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.price_per_day * mockTours.find(tour => tour.id === selectedTourId)?.duration).toFixed(2)}
+                          ${((selectedVehicleDetails?.price_per_day || 0) * (selectedTourDetails?.duration || 1)).toFixed(2)}
                         </span>
                       </div>
                     )}
@@ -431,10 +448,7 @@ const BookingsPage = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-bold text-gray-800">Total</span>
                       <span className="text-2xl font-bold text-orange-500">
-                        ${(
-                          (mockTours.find(tour => tour.id === selectedTourId)?.price * (formData.numAdults + formData.numChildren * 0.7) || 0) +
-                          (mockVehicles.find(vehicle => vehicle.id === selectedVehicleId)?.price_per_day * mockTours.find(tour => tour.id === selectedTourId)?.duration || 0)
-                        ).toFixed(2)}
+                        {bookingTotal}
                       </span>
                 </div>
                   </div>

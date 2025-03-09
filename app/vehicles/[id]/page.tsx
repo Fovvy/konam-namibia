@@ -2,7 +2,6 @@
 import React from 'react';
 import { mockVehicles } from '@/app/lib/mockData';
 import VehicleDetailClient from './VehicleDetailClient';
-import { notFound } from 'next/navigation';
 
 // This function is required for static exports 
 export async function generateStaticParams() {

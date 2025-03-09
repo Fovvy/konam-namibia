@@ -187,7 +187,7 @@ const VehiclesListPage = () => {
               No Vehicles Found
             </h3>
             <p className="text-gray-600 mb-8 max-w-3xl mx-auto">
-              Whether you&apos;re exploring the scenic deserts of Namibia or navigating through remote landscapes, our well-maintained fleet has something for every adventure.
+              Whether you’re exploring the scenic deserts of Namibia or navigating through remote landscapes, our well-maintained fleet has something for every adventure.
             </p>
             <button
               onClick={() => {

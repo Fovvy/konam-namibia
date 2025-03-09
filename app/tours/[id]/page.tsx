@@ -1,7 +1,6 @@
 // Server Component
 import React from 'react';
 import { mockTours } from '@/app/lib/mockData';
-import { notFound } from 'next/navigation';
 import TourDetailClient from './TourDetailClient';
 
 // This function is required for static exports
