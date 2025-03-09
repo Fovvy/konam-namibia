@@ -4,7 +4,6 @@ import React from 'react';
 import HeroSection from './components/ui/HeroSection';
 import AutoCarousel from './components/ui/AutoCarousel';
 import FeaturedCubeSlider from './components/ui/FeaturedCubeSlider';
-import KoreaNamibiaConnection from './components/ui/WhyChooseUs';
 import Testimonials from './components/ui/Testimonials';
 import PopularDestinations from './components/ui/PopularDestinations';
 import Link from 'next/link';
@@ -20,30 +19,69 @@ export default function Home() {
       {/* Popular Destinations */}
       <PopularDestinations />
       
-      {/* Featured Cube Slider Section */}
-      <FeaturedCubeSlider tours={mockTours.slice(0, 4)} />
-      
-      {/* Call to Action - Enquiry */}
-      <section className="py-16 bg-gradient-to-r from-gray-800 to-gray-900 text-white">
-        <div className="container-custom">
+      {/* Merged Welcome and Call to Action Section - Now third */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-white relative overflow-hidden">
+        {/* Floating sparkles and dots */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 rounded-full bg-blue-300 opacity-70"
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                opacity: [0.4, 0.8, 0.4],
+              }}
+              transition={{
+                duration: 2 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="container-custom z-10 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
               Plan Your Perfect Namibian Adventure
               <div className="korean-text text-xl mt-2">
                 당신만의 완벽한 나미비아 모험을 계획하세요
               </div>
             </h2>
-            <p className="text-lg mb-8">
+            <p className="text-lg mb-8 text-gray-600">
               Tell us your travel preferences, and we&apos;ll create a customized itinerary that matches your interests, budget, and schedule.
             </p>
+            
+            {/* Flags Container */}
+            <div className="flags-container my-10">
+              {/* Fixed Korean Flag */}
+              <div className="flag-wrapper">
+                <div className="flag korea-flag"></div>
+              </div>
+
+              {/* Fixed Namibian Flag */}
+              <div className="flag-wrapper">
+                <div className="flag namibia-flag"></div>
+              </div>
+            </div>
+            
+            <p className="text-gray-700 text-lg mx-auto max-w-4xl mb-8">
+              Experience the magic of two nations in one journey - providing you with an authentic and enriching travel
+              experience that you&apos;ll cherish forever!
+            </p>
+            
             <Link
               href="/enquiry"
-              className="inline-block px-8 py-4 bg-white text-[var(--korean-blue)] rounded-full font-bold text-lg hover:bg-gray-100 transition-colors hover:scale-105 transform duration-300"
+              className="inline-block px-8 py-4 bg-[var(--korean-blue)] text-white rounded-full font-bold text-lg hover:bg-blue-700 transition-colors hover:scale-105 transform duration-300"
             >
               Custom Itinerary
             </Link>
@@ -51,8 +89,8 @@ export default function Home() {
         </div>
       </section>
       
-      {/* Why Choose Us */}
-      <KoreaNamibiaConnection />
+      {/* Featured Cube Slider Section */}
+      <FeaturedCubeSlider tours={mockTours.slice(0, 4)} />
       
       {/* Testimonials */}
       <Testimonials reviews={mockReviews} />

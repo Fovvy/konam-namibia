@@ -128,27 +128,27 @@ const FeaturedCubeSlider: React.FC<FeaturedCubeSliderProps> = ({ tours }) => {
             >
               {tours.slice(0, 4).map((tour) => (
                 <SwiperSlide key={tour.id} className="rounded-xl overflow-hidden border border-white/30">
-                  <div className="relative w-full" style={{ aspectRatio: '1 / 1.25' }}>
+                  <div className="relative w-full" style={{ aspectRatio: '1 / 1.2' }}>
                     <Image
                       src={tour.image}
                       alt={tour.title}
                       fill
                       style={{ objectFit: 'cover' }}
-                      sizes="(max-width: 470px) 300px, (max-width: 1050px) 350px, 400px"
+                      sizes="(max-width: 470px) 350px, (max-width: 1050px) 400px, 500px"
                     />
-                    <div className="cost absolute top-2 right-2 bg-white/30 backdrop-blur-md rounded-full px-3 py-1 text-white font-medium text-sm md:text-base">
+                    <div className="cost absolute top-3 right-3 bg-black/50 backdrop-blur-md rounded-full px-4 py-2 text-white font-medium text-sm md:text-base">
                       from ${tour.price} per adult
                     </div>
-                    <div className="overlay absolute bottom-0 left-0 w-full h-[120px] md:h-[150px] bg-[rgba(93,95,145,0.2)] backdrop-blur-xl border-t border-white/30 p-3 md:p-5 rounded-b-xl flex flex-col justify-center">
-                      <h1 className="text-lg md:text-xl font-semibold text-white mb-1">{tour.title}</h1>
-                      <p className="text-xs md:text-sm text-white/90 mb-2 line-clamp-2">{tour.description}</p>
+                    <div className="overlay absolute bottom-0 left-0 w-full h-[150px] md:h-[180px] bg-black/70 backdrop-blur-md border-t border-white/30 p-4 md:p-6 rounded-b-xl flex flex-col justify-center">
+                      <h1 className="text-xl md:text-2xl font-semibold text-white mb-2">{tour.title}</h1>
+                      <p className="text-sm md:text-base text-white mb-3 line-clamp-2">{tour.description}</p>
                       <div className="ratings flex items-center gap-2 md:gap-3">
                         <div className="stars flex">
                           {[...Array(5)].map((_, i) => (
                             <svg 
                               key={i} 
                               xmlns="http://www.w3.org/2000/svg" 
-                              className={`h-3 w-3 md:h-4 md:w-4 ${i < 4 ? 'text-[#afe312]' : 'text-gray-300'}`}
+                              className={`h-4 w-4 md:h-5 md:w-5 ${i < 4 ? 'text-[#ffe234]' : 'text-gray-400'}`}
                               fill="currentColor" 
                               viewBox="0 0 24 24"
                             >
@@ -156,7 +156,7 @@ const FeaturedCubeSlider: React.FC<FeaturedCubeSliderProps> = ({ tours }) => {
                             </svg>
                           ))}
                         </div>
-                        <span className="text-xs md:text-sm text-white">{Math.floor(Math.random() * 500) + 100} reviews</span>
+                        <span className="text-sm md:text-base text-white/90">{Math.floor(Math.random() * 500) + 100} reviews</span>
                       </div>
                     </div>
                   </div>
