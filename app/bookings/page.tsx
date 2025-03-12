@@ -7,7 +7,6 @@ import { mockTours, mockVehicles, mockBookings } from '../lib/mockData';
 import '../styles/selectableCards.css';
 import SelectableCard from '../components/ui/SelectableCard';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const BookingsPage = () => {
   const searchParams = useSearchParams();
   const tourId = searchParams?.get('tour') || null;
