@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "build:netlify": "next build --no-lint",
+    "build:production": "NEXT_DISABLE_ESLINT=1 NEXT_TELEMETRY_DISABLED=1 NEXT_IGNORE_TYPESCRIPT_ERRORS=1 DISABLE_ESLINT=true next build --no-lint",
     "start": "next start",
     "lint": "next lint"
   },
