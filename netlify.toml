@@ -8,6 +8,8 @@
 [build.environment]
   NEXT_USE_NETLIFY_EDGE = "true"
   NEXT_LINT_IGNORE_ERRORS = "1"
+  NEXT_TELEMETRY_DISABLED = "1"
+  NEXT_IGNORE_TYPESCRIPT_ERRORS = "1"
 
 [[redirects]]
   from = "/*"

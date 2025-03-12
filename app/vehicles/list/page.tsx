@@ -183,11 +183,11 @@ const VehiclesListPage = () => {
           </div>
         ) : (
           <div className="text-center py-12">
-            <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-4">
-              No Vehicles Found
+            <h3 className="text-3xl font-bold mb-4 text-gray-800">
+              Our Vehicle Fleet
             </h3>
             <p className="text-gray-600 mb-8 max-w-3xl mx-auto">
-              Whether you’re exploring the scenic deserts of Namibia or navigating through remote landscapes, our well-maintained fleet has something for every adventure.
+              Whether you&apos;re exploring the scenic deserts of Namibia or navigating through remote landscapes, our well-maintained fleet has something for every adventure.
             </p>
             <button
               onClick={() => {
