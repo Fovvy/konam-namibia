@@ -63,14 +63,18 @@ export default function Home() {
             
             {/* Flags Container */}
             <div className="flags-container my-10">
-              {/* Fixed Korean Flag */}
-              <div className="flag-wrapper">
-                <div className="flag korea-flag"></div>
-              </div>
+              <div className="flex justify-center items-center gap-12 md:gap-20">
+                {/* Korean Flag */}
+                <div className="flag-wrapper">
+                  <div className="flag korea-flag"></div>
+                  <p className="text-center mt-3 font-medium text-gray-700">South Korea</p>
+                </div>
 
-              {/* Fixed Namibian Flag */}
-              <div className="flag-wrapper">
-                <div className="flag namibia-flag"></div>
+                {/* Namibian Flag */}
+                <div className="flag-wrapper">
+                  <div className="flag namibia-flag"></div>
+                  <p className="text-center mt-3 font-medium text-gray-700">Namibia</p>
+                </div>
               </div>
             </div>
             
@@ -102,8 +106,15 @@ export default function Home() {
       />
       
       {/* Call to Action - Booking */}
-      <section className="py-16 bg-[var(--desert)] bg-opacity-30">
-        <div className="container-custom">
+      <section className="py-16 bg-[var(--navy-blue)] relative overflow-hidden">
+        {/* Safari-themed pattern overlay */}
+        <div className="absolute inset-0 opacity-10" 
+          style={{
+            backgroundImage: `url('/images/patterns/safari-pattern.png')`,
+            backgroundSize: '300px',
+          }}
+        />
+        <div className="container-custom relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -111,32 +122,32 @@ export default function Home() {
             className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
           >
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[var(--text-primary)]">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                 Ready to Book Your Namibian Journey?
               </h2>
-              <p className="text-lg text-[var(--text-secondary)] mb-6">
+              <p className="text-lg text-white/80 mb-6">
                 Browse our selection of curated tour packages and vehicle rentals to begin your unforgettable adventure in Namibia.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/tours"
-                  className="btn-primary text-center"
+                  className="bg-[var(--accent)] hover:bg-[var(--accent-dark)] text-white font-bold py-3 px-6 rounded-md transition duration-300 text-center"
                 >
                   View Tour Packages
                 </Link>
                 <Link
                   href="/vehicles"
-                  className="btn-secondary text-center"
+                  className="bg-white text-[var(--navy-blue)] hover:bg-gray-100 font-bold py-3 px-6 rounded-md transition duration-300 text-center"
                 >
                   Rent a Vehicle
                 </Link>
               </div>
             </div>
-            <div className="relative h-80 overflow-hidden rounded-2xl shadow-xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] opacity-40"></div>
+            <div className="relative h-80 overflow-hidden rounded-2xl shadow-xl transform transition-transform hover:scale-[1.02] duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)] to-[var(--primary)] opacity-40"></div>
               <div className="absolute inset-0 flex items-center justify-center text-white z-10">
-                <div className="text-center">
-                  <h3 className="text-3xl font-bold mb-4">Special Offer</h3>
+                <div className="text-center bg-black/30 p-6 rounded-xl backdrop-blur-sm">
+                  <h3 className="text-3xl font-bold mb-4">Special Safari Offer</h3>
                   <p className="text-xl mb-4">10% Off for Early Bookings</p>
                   <p className="text-sm">Book 3 months in advance and save!</p>
                 </div>

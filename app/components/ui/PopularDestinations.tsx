@@ -108,7 +108,7 @@ const PopularDestinations = () => {
   return (
     <section className="py-20" style={{
       background: `linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)),
-                   url('/images/pattern333.png')`,
+                   url('/images/patterns/safari-pattern.png')`,
       backgroundSize: '200px',
       backgroundPosition: 'fixed',
     }}>

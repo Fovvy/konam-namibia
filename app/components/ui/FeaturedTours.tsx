@@ -35,8 +35,12 @@ const FeaturedTours: React.FC<FeaturedToursProps> = ({ tours }) => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="card group"
+              className="card group relative"
             >
+              <Link href={`/tours/${tour.id}`} className="absolute inset-0 z-10">
+                <span className="sr-only">View {tour.title} details</span>
+              </Link>
+              
               <div className="relative h-60 w-full overflow-hidden">
                 <Image
                   src={tour.image}
@@ -46,7 +50,7 @@ const FeaturedTours: React.FC<FeaturedToursProps> = ({ tours }) => {
                   className="transition-transform duration-500 group-hover:scale-110"
                 />
                 {tour.featured && (
-                  <div className="absolute top-4 right-4 bg-[var(--primary)] text-white py-1 px-3 rounded-full text-sm font-medium">
+                  <div className="absolute top-4 right-4 bg-[var(--primary)] text-white py-1 px-3 rounded-full text-sm font-medium z-20">
                     Featured
                   </div>
                 )}
@@ -86,12 +90,15 @@ const FeaturedTours: React.FC<FeaturedToursProps> = ({ tours }) => {
                   </div>
                 </div>
 
-                <Link
-                  href={`/tours/${tour.id}`}
-                  className="block w-full text-center py-2 bg-[var(--desert)] text-[var(--text-primary)] rounded-lg font-medium hover:bg-[var(--accent)] hover:text-white transition-colors"
-                >
-                  View Details
-                </Link>
+                <div className="relative z-20">
+                  <Link
+                    href={`/tours/${tour.id}`}
+                    className="block w-full text-center py-2 bg-[var(--desert)] text-[var(--text-primary)] rounded-lg font-medium hover:bg-[var(--accent)] hover:text-white transition-colors"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    View Details
+                  </Link>
+                </div>
               </div>
             </motion.div>
           ))}

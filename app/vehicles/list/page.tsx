@@ -176,7 +176,7 @@ const VehiclesListPage = () => {
         
         {/* Vehicles List */}
         {sortedVehicles.length > 0 ? (
-          <div className="listing-grid">
+          <div className="space-y-6">
             {sortedVehicles.map((vehicle, index) => (
               <VehicleCard key={vehicle.id} vehicle={vehicle} index={index} />
             ))}
@@ -263,7 +263,7 @@ const VehiclesListPage = () => {
                 <svg className="h-6 w-6 text-[var(--secondary)] mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>A valid driver's license is required for all rentals.</span>
+                <span>A valid driver&apos;s license is required for all rentals.</span>
               </li>
               <li className="flex items-start">
                 <svg className="h-6 w-6 text-[var(--secondary)] mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -302,10 +302,10 @@ const VehicleCard = ({ vehicle, index }: VehicleCardProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
-      className="bg-white rounded-xl overflow-hidden shadow-lg"
+      className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
     >
-      <Link href={`/vehicles/${vehicle.id}`}>
-        <div className="relative h-48 bg-gray-100">
+      <Link href={`/vehicles/${vehicle.id}`} className="flex flex-col md:flex-row">
+        <div className="relative h-56 md:h-auto md:w-1/3 bg-gray-100">
           <Image
             src={vehicle.image}
             alt={vehicle.name}
@@ -316,24 +316,63 @@ const VehicleCard = ({ vehicle, index }: VehicleCardProps) => {
             ${vehicle.price_per_day}/day
           </div>
         </div>
-        <div className="p-4">
-          <h3 className="font-bold text-navy-800 text-lg mb-1">{vehicle.name}</h3>
-          <div className="flex items-center text-gray-600 text-sm mb-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-            </svg>
-            {vehicle.capacity} passengers
+        <div className="p-5 md:w-2/3 flex flex-col justify-between">
+          <div>
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="font-bold text-navy-800 text-xl">{vehicle.name}</h3>
+              <span className="bg-navy-100 text-navy-700 px-3 py-1 rounded-full text-sm font-semibold">{vehicle.type}</span>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="flex items-center text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mr-2 text-navy-600">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                </svg>
+                <span>{vehicle.capacity} passengers</span>
+              </div>
+              <div className="flex items-center text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mr-2 text-navy-600">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 0115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
+                </svg>
+                <span>A/C</span>
+              </div>
+              <div className="flex items-center text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mr-2 text-navy-600">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75 6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.008v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+                <span>Bluetooth</span>
+              </div>
+              <div className="flex items-center text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mr-2 text-navy-600">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>Auto</span>
+              </div>
+            </div>
+            
+            <div className="flex flex-wrap gap-2 mb-3">
+              {vehicle.features.slice(0, 3).map((feature, i) => (
+                <span key={i} className="bg-gray-100 text-gray-700 px-2 py-1 text-xs rounded">
+                  {feature}
+                </span>
+              ))}
+              {vehicle.features.length > 3 && (
+                <span className="bg-gray-100 text-gray-700 px-2 py-1 text-xs rounded">
+                  +{vehicle.features.length - 3} more
+                </span>
+              )}
+            </div>
           </div>
-          <div className="flex items-center text-gray-600 text-sm mb-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6Z" />
-            </svg>
-            {vehicle.type}
-          </div>
-          <div className="flex justify-between items-center pt-1">
-            <p className="text-sm text-gray-500">{vehicle.features[0]}</p>
-            <button className="text-sm px-3 py-1 bg-navy-700 text-white rounded-full">Details</button>
+          
+          <div className="flex justify-between items-center mt-2">
+            <div>
+              <span className="block text-lg font-bold text-navy-800">${vehicle.price_per_day}</span>
+              <span className="text-sm text-gray-500">per day</span>
+            </div>
+            <button className="px-5 py-2 bg-navy-700 hover:bg-navy-800 text-white rounded-lg transition-colors">
+              Book Now
+            </button>
           </div>
         </div>
       </Link>

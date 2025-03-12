@@ -14,7 +14,7 @@ const VehiclesPage = () => {
   const [sortBy, setSortBy] = useState('default');
   const router = useRouter();
   
-  // Redirect to list view on component mount
+  // Always redirect to list view on component mount
   useEffect(() => {
     router.push('/vehicles/list');
   }, [router]);
@@ -94,14 +94,6 @@ const VehiclesPage = () => {
               <p className="text-xl text-white max-w-2xl mx-auto korean-text">
                 나미비아를 자유롭게 탐험하세요
               </p>
-              <div className="mt-6 flex justify-center space-x-4">
-                <span className="px-4 py-2 rounded-full bg-orange-500 text-white">
-                  Grid View
-                </span>
-                <Link href="/vehicles/list" className="px-4 py-2 rounded-full bg-white text-gray-800 hover:bg-gray-100 transition">
-                  List View
-                </Link>
-              </div>
             </motion.div>
           </div>
         </div>

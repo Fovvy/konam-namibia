@@ -19,37 +19,22 @@ interface FeaturedCubeSliderProps {
 const FeaturedCubeSlider: React.FC<FeaturedCubeSliderProps> = ({ tours }) => {
   return (
     <section className="featured-cube-slider relative py-16 lg:py-24 overflow-hidden bg-navy-900">
-      {/* African-themed pattern background */}
+      {/* Simple navy background */}
       <div className="absolute inset-0 bg-[#0A1128] overflow-hidden">
-        {/* African pattern overlay */}
-        <div 
-          className="absolute inset-0 opacity-15"
-          style={{
-            backgroundImage: `url('/images/patterns/african-pattern.png')`,
-            backgroundSize: '300px',
-            backgroundRepeat: 'repeat',
-            opacity: 0.15
-          }}
-        ></div>
-        
-        {/* African symbolic elements instead of circles */}
+        {/* Bouncing balls effect */}
         <div className="absolute w-full h-full">
           {[...Array(10)].map((_, i) => (
             <div 
               key={i}
-              className="absolute"
+              className="absolute rounded-full"
               style={{
-                width: `${Math.random() * 50 + 30}px`,
-                height: `${Math.random() * 50 + 30}px`,
+                width: `${Math.random() * 40 + 20}px`,
+                height: `${Math.random() * 40 + 20}px`,
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                backgroundImage: `url('/images/patterns/african-symbol-${(i % 5) + 1}.svg')`,
-                backgroundSize: 'contain',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-                animation: `float ${Math.random() * 15 + 20}s linear infinite`,
+                backgroundColor: `rgba(255, 255, 255, ${Math.random() * 0.2 + 0.1})`,
+                animation: `bounce ${Math.random() * 10 + 15}s ease-in-out infinite alternate`,
                 animationDelay: `${Math.random() * 5}s`,
-                opacity: 0.2,
                 zIndex: 1
               }}
             />
@@ -58,18 +43,21 @@ const FeaturedCubeSlider: React.FC<FeaturedCubeSliderProps> = ({ tours }) => {
       </div>
       
       <style jsx global>{`
-        @keyframes float {
+        @keyframes bounce {
           0% {
-            transform: translate(0, 0) rotate(0deg);
+            transform: translateY(0) translateX(0);
           }
-          33% {
-            transform: translate(30px, -50px) rotate(120deg);
+          25% {
+            transform: translateY(-30px) translateX(20px);
           }
-          66% {
-            transform: translate(-20px, 20px) rotate(240deg);
+          50% {
+            transform: translateY(20px) translateX(-20px);
+          }
+          75% {
+            transform: translateY(-10px) translateX(10px);
           }
           100% {
-            transform: translate(0, 0) rotate(360deg);
+            transform: translateY(0) translateX(0);
           }
         }
       `}</style>
@@ -77,28 +65,27 @@ const FeaturedCubeSlider: React.FC<FeaturedCubeSliderProps> = ({ tours }) => {
       <div className="container-custom relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-12 lg:gap-20">
           {/* Content Section */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="content text-white order-2 md:order-1 text-center md:text-left"
+            className="order-2 md:order-1"
           >
-            <div className="text-center mb-10">
-              <h2 className="text-4xl font-bold mb-4 text-white">Let&#39;s Travel the World Together</h2>
-              <p className="text-xl text-white/70 max-w-3xl mx-auto">
+            <motion.div className="content text-white">
+              <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6">Let&#39;s Travel The World Together</h1>
+              <p className="text-xl text-white/80 max-w-3xl mb-6">
                 Experience Namibia&#39;s wonders through our carefully crafted tour packages
               </p>
-            </div>
-            <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6">Let&#39;s Travel The World Together!</h1>
-            <p className="text-base md:text-lg mb-6 md:mb-8 max-w-2xl mx-auto md:mx-0">
-              Our tours are designed to transport you to the heart of Namibia&#39;s
-              most captivating destinations, creating memories that will last a
-              lifetime. You can uncover the hidden gems, iconic landmarks, and
-              unique cultural treasures that make each destination special.
-            </p>
-            <Link href="/tours" className="inline-block bg-white text-[var(--korean-blue)] px-6 md:px-8 py-2 md:py-3 rounded-md font-bold hover:bg-[var(--accent)] hover:scale-95 transition-all duration-300">
-              Explore Tours
-            </Link>
+              <p className="text-base md:text-lg mb-6 md:mb-8 max-w-2xl">
+                Our tours are designed to transport you to the heart of Namibia&#39;s
+                most captivating destinations, creating memories that will last a
+                lifetime. You can uncover the hidden gems, iconic landmarks, and
+                unique cultural treasures that make each destination special.
+              </p>
+              <Link href="/tours" className="inline-block bg-white text-[var(--korean-blue)] px-6 md:px-8 py-2 md:py-3 rounded-md font-bold hover:bg-[var(--accent)] hover:scale-95 transition-all duration-300">
+                Explore Tours
+              </Link>
+            </motion.div>
           </motion.div>
 
           {/* Slider Section */}
